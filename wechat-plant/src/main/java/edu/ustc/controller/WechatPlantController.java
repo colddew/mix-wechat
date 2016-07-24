@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/wechat/plant")
+@RequestMapping("/plant")
 public class WechatPlantController {
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public String index() {
-        return "index";
+        return "{\"title\":\"绿色植物\", \"icon\":\"plant.png\"}";
     }
 }
