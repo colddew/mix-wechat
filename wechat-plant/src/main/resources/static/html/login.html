@@ -15,10 +15,15 @@
 
 <div class="container">
     <form class="form-login">
-        <label for="inputTelphone" class="sr-only">手机号</label>
-        <input type="telphone" id="inputTelphone" class="form-control" placeholder="手机号" required autofocus>
-        <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+            <input type="telphone" id="inputTelphone" class="form-control" placeholder="手机号" required autofocus>
+        </div>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+            <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        </div>
+        <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
     </form>
 </div>
