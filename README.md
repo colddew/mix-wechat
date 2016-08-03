@@ -1,2 +1,2 @@
 # mix-wechat
-mix-wechat
+wechat playground
