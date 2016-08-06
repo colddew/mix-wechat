@@ -26,10 +26,10 @@ public class AccessTokenController {
 
         try {
             WechatAccessToken wechatAccessToken = accessTokenService.refreshAccessToken(appID, appSecret);
-            logger.info("refresh access token success, {}", JSON.toJSONString(wechatAccessToken));
+            logger.info("manual refresh access token success, {}", JSON.toJSONString(wechatAccessToken));
             return wechatAccessToken;
         } catch (Exception e) {
-            logger.error("refresh access token error, {}" + e.getMessage());
+            logger.error("manual refresh access token error, {}" + e.getMessage());
             return null;
         }
     }
