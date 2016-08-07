@@ -5,6 +5,7 @@ import edu.ustc.config.WechatProperties;
 import edu.ustc.pojo.WechatAccessToken;
 import edu.ustc.utils.OkHttpUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ public class AccessTokenService {
 
     private String appID;
     private String appSecret;
-    private long expiryStartTime;
     private WechatAccessToken wechatAccessToken;
 
     @Autowired
@@ -31,7 +31,6 @@ public class AccessTokenService {
 
     @PostConstruct
     public void init() {
-        expiryStartTime = 0;
         wechatAccessToken = new WechatAccessToken();
     }
 
@@ -64,6 +63,7 @@ public class AccessTokenService {
             String result = OkHttpUtils.synGetString(wechatAccessTokenUrl);
             WechatAccessToken accessToken = JSON.parseObject(result, WechatAccessToken.class);
 
+            supplement(accessToken);
             cache(appID, appSecret, accessToken);
 
             return accessToken;
@@ -78,12 +78,14 @@ public class AccessTokenService {
             return true;
         }
 
-        if(StringUtils.isNotBlank(wechatAccessToken.getAccessToken()) && StringUtils.isNotBlank(wechatAccessToken.getExpiry()) && expiryStartTime > 0) {
+        if(StringUtils.isNotBlank(wechatAccessToken.getAccessToken()) && StringUtils.isNotBlank(wechatAccessToken.getExpiry())
+                && null != wechatAccessToken.getExpiryStartTime()) {
 
             long now = new Date().getTime();
-            long expiry = Long.parseLong(wechatAccessToken.getExpiry());
+            long expiryStartTime = wechatAccessToken.getExpiryStartTime().getTime();
+            long expiry = Long.parseLong(wechatAccessToken.getExpiry()) * 1000;
 
-            if(now - expiryStartTime > expiry * 1000) {
+            if(now - expiryStartTime > expiry) {
                 return true;
             }
         }
@@ -100,10 +102,20 @@ public class AccessTokenService {
         return wechatAccessTokenUrl;
     }
 
+    private void supplement(WechatAccessToken accessToken) {
+
+        if(StringUtils.isNotBlank(accessToken.getExpiry())) {
+
+            Date expiryStartTime = new Date();
+
+            accessToken.setExpiryStartTime(expiryStartTime);
+            accessToken.setExpiryEndTime(DateUtils.addSeconds(expiryStartTime, Integer.parseInt(accessToken.getExpiry())));
+        }
+    }
+
     private void cache(String appID, String appSecret, WechatAccessToken wechatAccessToken) {
         this.appID = appID;
         this.appSecret = appSecret;
-        this.expiryStartTime = new Date().getTime();
         this.wechatAccessToken = wechatAccessToken;
     }
 }

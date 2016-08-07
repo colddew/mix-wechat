@@ -4,13 +4,22 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Date;
 
-public class WechatAccessToken {
+public class WechatOAuthToken {
 
     @JSONField(name = "access_token")
     private String accessToken;
 
     @JSONField(name = "expires_in")
     private String expiry;
+
+    @JSONField(name = "refresh_token")
+    private String refreshToken;
+
+    @JSONField(name = "openid")
+    private String openID;
+
+    @JSONField(name = "scope")
+    private String scope;
 
     @JSONField(name = "errcode")
     private String errorCode;
@@ -38,6 +47,30 @@ public class WechatAccessToken {
 
     public void setExpiry(String expiry) {
         this.expiry = expiry;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public String getOpenID() {
+        return openID;
+    }
+
+    public void setOpenID(String openID) {
+        this.openID = openID;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 
     public String getErrorCode() {
