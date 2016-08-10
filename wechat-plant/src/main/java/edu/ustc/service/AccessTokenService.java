@@ -31,7 +31,9 @@ public class AccessTokenService {
 
     @PostConstruct
     public void init() {
-        wechatAccessToken = new WechatAccessToken();
+        this.appID = wechatProperties.getAppID();
+        this.appSecret = wechatProperties.getAppSecret();
+        this.wechatAccessToken = new WechatAccessToken();
     }
 
     @Scheduled(fixedDelay = 1000 * 60 * 60)
@@ -57,7 +59,7 @@ public class AccessTokenService {
 
     public WechatAccessToken refreshAccessToken(String appID, String appSecret) throws Exception {
 
-        if (needRefreshAccessToken()) {
+        if(needRefreshAccessToken()) {
 
             String wechatAccessTokenUrl = getWechatAccessTokenUrl(appID, appSecret);
             String result = OkHttpUtils.synGetString(wechatAccessTokenUrl);

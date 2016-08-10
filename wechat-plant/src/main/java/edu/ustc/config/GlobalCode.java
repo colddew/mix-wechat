@@ -1,6 +1,6 @@
 package edu.ustc.config;
 
-public enum  ErrorCode {
+public enum GlobalCode {
 
     CODE_BUSY("-1", "系统繁忙，此时请开发者稍候再试"),
     CODE_OK("0", "请求成功"),
@@ -156,7 +156,7 @@ public enum  ErrorCode {
     private String code;
     private String description;
 
-    ErrorCode(String code, String description) {
+    GlobalCode(String code, String description) {
         this.code = code;
         this.description = description;
     }

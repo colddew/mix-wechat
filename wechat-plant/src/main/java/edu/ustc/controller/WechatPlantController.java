@@ -43,7 +43,7 @@ public class WechatPlantController {
                 logger.info("verify request fail, {}", JSON.toJSONString(request));
             }
         } catch (Exception e) {
-            logger.error("verify request error, {}" + e.getMessage());
+            logger.error("verify request error, {}", e.getMessage());
         }
     }
 
