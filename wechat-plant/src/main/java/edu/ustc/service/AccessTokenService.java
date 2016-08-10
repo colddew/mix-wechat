@@ -98,10 +98,9 @@ public class AccessTokenService {
     private String getWechatAccessTokenUrl(String appID, String appSecret) throws Exception {
 
         String wechatAccessTokenUrl = wechatProperties.getWechatAccessTokenUrl();
-        wechatAccessTokenUrl = wechatAccessTokenUrl.replaceAll("#APPID#", appID);
-        wechatAccessTokenUrl = wechatAccessTokenUrl.replaceAll("#APPSECRET#", appSecret);
         
-        return wechatAccessTokenUrl;
+        return StringUtils.replaceEach(wechatAccessTokenUrl, new String[]{"#APPID#", "#APPSECRET#"},
+                new String[]{appID, appSecret});
     }
 
     private void supplement(WechatAccessToken accessToken) {
