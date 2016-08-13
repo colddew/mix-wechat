@@ -7,13 +7,17 @@ import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import edu.ustc.config.WechatConstants;
 import edu.ustc.dto.VerificationRequest;
+import edu.ustc.pojo.WechatUserInfo;
+import edu.ustc.service.WechatPlantService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +32,9 @@ import java.util.Collections;
 public class WechatPlantController {
 
     private static final Logger logger = LoggerFactory.getLogger(WechatPlantController.class);
+
+    @Autowired
+    private WechatPlantService wechatPlantService;
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public void verify(VerificationRequest request, HttpServletResponse response) {
@@ -79,5 +86,31 @@ public class WechatPlantController {
 
         stream.flush();
         stream.close();
+    }
+
+    @RequestMapping(value = "/wechatUserInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public WechatUserInfo getWechatUserInfo(String oAuthToken, String openID) {
+        try {
+            WechatUserInfo userInfo = wechatPlantService.getWechatUserInfo(oAuthToken, openID);
+            logger.info("get wechat user info success, {}", JSON.toJSONString(userInfo));
+            return userInfo;
+        } catch (Exception e) {
+            logger.error("get wechat user info error, {}", e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public WechatUserInfo getUserInfo(String code, String state) {
+        try {
+            WechatUserInfo userInfo = wechatPlantService.getUserInfo(code, state);
+            logger.info("get user info success, {}", JSON.toJSONString(userInfo));
+            return userInfo;
+        } catch (Exception e) {
+            logger.error("get user info error, {}", e.getMessage());
+            return null;
+        }
     }
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 public class WechatOAuthToken {
 
     @JSONField(name = "access_token")
-    private String accessToken;
+    private String oAuthToken;
 
     @JSONField(name = "expires_in")
     private String expiry;
@@ -33,12 +33,12 @@ public class WechatOAuthToken {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date expiryEndTime;
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getOAuthToken() {
+        return oAuthToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setOAuthToken(String oAuthToken) {
+        this.oAuthToken = oAuthToken;
     }
 
     public String getExpiry() {

@@ -12,13 +12,21 @@ angular.module("plantApp", [])
     // console.info($location.search().code);
     // console.info($location.search().state);
 
-    // $location.path("/oauthToken/wechat");
+    // $location.path("/oAuthToken/wechat");
     // $location.replace();
 
     var code = $location.search().code;
     var state = $location.search().state;
     if(code && state) {
-        $http.get("/oauthToken/wechat?code=" + code + "&state=" + state)
+
+        // var oAuthTokenUrl = "/oAuthToken/wechat?code=" + code + "&state=" + state;
+        // $http.get(oAuthTokenUrl)
+        //     .then(function(oAuthToken) {
+        //     console.info(oAuthToken);
+        // });
+
+        var userInfoUrl = "/plant/userInfo?code=" + code + "&state=" + state;
+        $http.get(userInfoUrl)
             .then(function(oAuthToken) {
             console.info(oAuthToken);
         });

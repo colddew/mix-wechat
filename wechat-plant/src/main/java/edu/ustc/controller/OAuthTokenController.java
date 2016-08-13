@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/oauthToken")
+@RequestMapping("/oAuthToken")
 public class OAuthTokenController {
 
     private static final Logger logger = LoggerFactory.getLogger(OAuthTokenController.class);
@@ -32,7 +32,7 @@ public class OAuthTokenController {
             logger.info("get base authorize url success, {}", authorizeUrl);
             return authorizeUrl;
         } catch (Exception e) {
-            logger.error("get base authorize url error, {}" + e.getMessage());
+            logger.error("get base authorize url error, {}", e.getMessage());
             return null;
         }
     }
@@ -54,11 +54,37 @@ public class OAuthTokenController {
     @RequestMapping(value = "/wechat", method = RequestMethod.GET)
     public WechatOAuthToken getWechatOAuthToken(String code, String state) {
         try {
-            WechatOAuthToken wechatOAuthToken = oAuthTokenService.getWechatOAuthToken(code, state);
-            logger.info("get wechat oauth token success, {}", JSON.toJSONString(wechatOAuthToken));
-            return wechatOAuthToken;
+            WechatOAuthToken oAuthToken = oAuthTokenService.getWechatOAuthToken(code, state);
+            logger.info("get wechat oauth token success, {}", JSON.toJSONString(oAuthToken));
+            return oAuthToken;
         } catch (Exception e) {
             logger.error("get wechat oauth token error, {}", e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
+    public WechatOAuthToken refreshOAuthToken(String refreshToken) {
+
+        try {
+            WechatOAuthToken oAuthToken = oAuthTokenService.refreshOAuthToken(refreshToken);
+            logger.info("manual refresh oauth token success, {}", JSON.toJSONString(oAuthToken));
+            return oAuthToken;
+        } catch (Exception e) {
+            logger.error("manual refresh oauth token error, {}", e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public WechatOAuthToken checkOAuthToken(String oAuthToken, String openID) {
+
+        try {
+            WechatOAuthToken token = oAuthTokenService.checkOAuthToken(oAuthToken, openID);
+            logger.info("check oauth token success, {}", JSON.toJSONString(token));
+            return token;
+        } catch (Exception e) {
+            logger.error("check oauth token error, {}", e.getMessage());
             return null;
         }
     }

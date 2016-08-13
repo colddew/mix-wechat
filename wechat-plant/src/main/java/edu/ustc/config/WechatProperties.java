@@ -24,16 +24,16 @@ public class WechatProperties {
     private String authorizeUrl;
 
     @Value("${wechat.oauth.token.url}")
-    private String oauthTokenUrl;
+    private String oAuthTokenUrl;
 
     @Value("${wechat.oauth.refresh.token.url}")
-    private String refreshOauthTokenUrl;
+    private String refreshOAuthTokenUrl;
 
     @Value("${wechat.oauth.userinfo.url}")
-    private String oauthUserInfoUrl;
+    private String oAuthUserInfoUrl;
 
     @Value("${wechat.oauth.check.token.url}")
-    private String checkOauthTokenUrl;
+    private String checkOAuthTokenUrl;
 
     public String getAppID() {
         return appID;
@@ -75,35 +75,35 @@ public class WechatProperties {
         this.authorizeUrl = authorizeUrl;
     }
 
-    public String getOauthTokenUrl() {
-        return oauthTokenUrl;
+    public String getOAuthTokenUrl() {
+        return oAuthTokenUrl;
     }
 
-    public void setOauthTokenUrl(String oauthTokenUrl) {
-        this.oauthTokenUrl = oauthTokenUrl;
+    public void setOAuthTokenUrl(String oAuthTokenUrl) {
+        this.oAuthTokenUrl = oAuthTokenUrl;
     }
 
-    public String getRefreshOauthTokenUrl() {
-        return refreshOauthTokenUrl;
+    public String getRefreshOAuthTokenUrl() {
+        return refreshOAuthTokenUrl;
     }
 
-    public void setRefreshOauthTokenUrl(String refreshOauthTokenUrl) {
-        this.refreshOauthTokenUrl = refreshOauthTokenUrl;
+    public void setRefreshOAuthTokenUrl(String refreshOAuthTokenUrl) {
+        this.refreshOAuthTokenUrl = refreshOAuthTokenUrl;
     }
 
-    public String getOauthUserInfoUrl() {
-        return oauthUserInfoUrl;
+    public String getOAuthUserInfoUrl() {
+        return oAuthUserInfoUrl;
     }
 
-    public void setOauthUserInfoUrl(String oauthUserInfoUrl) {
-        this.oauthUserInfoUrl = oauthUserInfoUrl;
+    public void setOAuthUserInfoUrl(String oAuthUserInfoUrl) {
+        this.oAuthUserInfoUrl = oAuthUserInfoUrl;
     }
 
-    public String getCheckOauthTokenUrl() {
-        return checkOauthTokenUrl;
+    public String getCheckOAuthTokenUrl() {
+        return checkOAuthTokenUrl;
     }
 
-    public void setCheckOauthTokenUrl(String checkOauthTokenUrl) {
-        this.checkOauthTokenUrl = checkOauthTokenUrl;
+    public void setCheckOAuthTokenUrl(String checkOAuthTokenUrl) {
+        this.checkOAuthTokenUrl = checkOAuthTokenUrl;
     }
 }

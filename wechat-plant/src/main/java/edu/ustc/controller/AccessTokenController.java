@@ -29,7 +29,7 @@ public class AccessTokenController {
             logger.info("manual refresh access token success, {}", JSON.toJSONString(accessToken));
             return accessToken;
         } catch (Exception e) {
-            logger.error("manual refresh access token error, {}" + e.getMessage());
+            logger.error("manual refresh access token error, {}", e.getMessage());
             return null;
         }
     }
