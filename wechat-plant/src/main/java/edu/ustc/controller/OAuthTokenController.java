@@ -1,7 +1,9 @@
 package edu.ustc.controller;
 
+import com.alibaba.fastjson.JSON;
 import edu.ustc.config.AuthorizeScope;
 import edu.ustc.config.WechatConstants;
+import edu.ustc.pojo.WechatOAuthToken;
 import edu.ustc.service.OAuthTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ public class OAuthTokenController {
     @Autowired
     private OAuthTokenService oAuthTokenService;
 
-    @RequestMapping(value = "baseAuthorizeUrl", method = RequestMethod.GET)
+    @RequestMapping(value = "/baseAuthorizeUrl", method = RequestMethod.GET)
     public String getBaseAuthorizeUrl(String appID, String redirectUri) {
 
         try {
@@ -35,7 +37,7 @@ public class OAuthTokenController {
         }
     }
 
-    @RequestMapping(value = "userInfoAuthorizeUrl", method = RequestMethod.GET)
+    @RequestMapping(value = "/userInfoAuthorizeUrl", method = RequestMethod.GET)
     public String getUserInfoAuthorizeUrl(String appID, String redirectUri) {
 
         try {
@@ -44,7 +46,19 @@ public class OAuthTokenController {
             logger.info("get userInfo authorize url success, {}", authorizeUrl);
             return authorizeUrl;
         } catch (Exception e) {
-            logger.error("get userInfo authorize url error, {}" + e.getMessage());
+            logger.error("get userInfo authorize url error, {}", e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/wechat", method = RequestMethod.GET)
+    public WechatOAuthToken getWechatOAuthToken(String code, String state) {
+        try {
+            WechatOAuthToken wechatOAuthToken = oAuthTokenService.getWechatOAuthToken(code, state);
+            logger.info("get wechat oauth token success, {}", JSON.toJSONString(wechatOAuthToken));
+            return wechatOAuthToken;
+        } catch (Exception e) {
+            logger.error("get wechat oauth token error, {}", e.getMessage());
             return null;
         }
     }

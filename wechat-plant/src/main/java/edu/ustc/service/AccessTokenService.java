@@ -1,6 +1,7 @@
 package edu.ustc.service;
 
 import com.alibaba.fastjson.JSON;
+import edu.ustc.config.WechatException;
 import edu.ustc.config.WechatProperties;
 import edu.ustc.pojo.WechatAccessToken;
 import edu.ustc.utils.OkHttpUtils;
@@ -64,6 +65,9 @@ public class AccessTokenService {
             String wechatAccessTokenUrl = getWechatAccessTokenUrl(appID, appSecret);
             String result = OkHttpUtils.synGetString(wechatAccessTokenUrl);
             WechatAccessToken accessToken = JSON.parseObject(result, WechatAccessToken.class);
+            if(StringUtils.isNotBlank(accessToken.getErrorCode())) {
+                throw new WechatException(accessToken.getErrorCode(), accessToken.getErrorMessage());
+            }
 
             supplement(accessToken);
             cache(appID, appSecret, accessToken);

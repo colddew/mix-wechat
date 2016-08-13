@@ -21,13 +21,13 @@ public class AccessTokenController {
     @Autowired
     private AccessTokenService accessTokenService;
 
-    @RequestMapping(value = "refresh", method = RequestMethod.GET)
+    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
     public WechatAccessToken refreshAccessToken(String appID, String appSecret) {
 
         try {
-            WechatAccessToken wechatAccessToken = accessTokenService.refreshAccessToken(appID, appSecret);
-            logger.info("manual refresh access token success, {}", JSON.toJSONString(wechatAccessToken));
-            return wechatAccessToken;
+            WechatAccessToken accessToken = accessTokenService.refreshAccessToken(appID, appSecret);
+            logger.info("manual refresh access token success, {}", JSON.toJSONString(accessToken));
+            return accessToken;
         } catch (Exception e) {
             logger.error("manual refresh access token error, {}" + e.getMessage());
             return null;
