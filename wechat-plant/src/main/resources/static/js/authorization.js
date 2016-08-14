@@ -19,17 +19,8 @@ angular.module("plantApp", [])
     var state = $location.search().state;
     if(code && state) {
 
-        // var oAuthTokenUrl = "/oAuthToken/wechat?code=" + code + "&state=" + state;
-        // $http.get(oAuthTokenUrl).then(function(oAuthToken) {
-        //     console.info(oAuthToken);
-        // });
-
         var userInfoUrl = "/plant/userInfo?code=" + code + "&state=" + state;
         $http.get(userInfoUrl).then(function(oAuthToken) {
-            // console.info(oAuthToken);
-            // console.info(oAuthToken.data);
-            // console.info(oAuthToken.data.headimgurl);
-
             var avtar = oAuthToken.data.headimgurl.replace(new RegExp(/\/0$/g), "/46");
             $scope.avtar = avtar;
             $scope.nickname = oAuthToken.data.nickname;
