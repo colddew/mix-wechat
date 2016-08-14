@@ -7,14 +7,17 @@ import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import edu.ustc.config.WechatConstants;
 import edu.ustc.dto.VerificationRequest;
+import edu.ustc.dto.WechatMessage;
 import edu.ustc.pojo.WechatUserInfo;
 import edu.ustc.service.WechatPlantService;
+import edu.ustc.utils.JaxbUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,13 +31,15 @@ import java.util.Collections;
 
 @Controller
 @EnableAutoConfiguration
-@RequestMapping("/plant")
+    @RequestMapping("/plant")
 public class WechatPlantController {
 
     private static final Logger logger = LoggerFactory.getLogger(WechatPlantController.class);
 
     @Autowired
     private WechatPlantService wechatPlantService;
+
+    // ----------------------------- link to wechat start -----------------------------
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public void verify(VerificationRequest request, HttpServletResponse response) {
@@ -87,6 +92,28 @@ public class WechatPlantController {
         stream.flush();
         stream.close();
     }
+
+    @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
+    public void pushMessage(@RequestBody String wechatMessage, HttpServletResponse response) {
+
+        try {
+
+            logger.info("push wechat message, {}", wechatMessage);
+
+            if(StringUtils.isNotBlank(wechatMessage)) {
+
+                WechatMessage message = JaxbUtils.convertXmlToObject(wechatMessage, WechatMessage.class);
+
+                logger.info("push wechat message success");
+            } else {
+                logger.info("push wechat message fail");
+            }
+        } catch (Exception e) {
+            logger.error("push wechat message error, {}", e.getMessage());
+        }
+    }
+
+    // ----------------------------- link to wechat end -----------------------------
 
     @RequestMapping(value = "/wechatUserInfo", method = RequestMethod.GET)
     @ResponseBody
