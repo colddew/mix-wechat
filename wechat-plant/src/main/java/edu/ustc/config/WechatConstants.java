@@ -9,4 +9,10 @@ public class WechatConstants {
     public static final String WECHAT_PLANT_TOKEN = "mix2wechat";
     public static final String WECHAT_AUTHORIZE_STATE_BASE = "authorize_base";
     public static final String WECHAT_AUTHORIZE_STATE_USERINFO = "authorize_userinfo";
+
+    public static final int AVATAR_SIZE_0 = 0;      // the same to 640
+    public static final int AVATAR_SIZE_46 = 46;
+    public static final int AVATAR_SIZE_64 = 64;
+    public static final int AVATAR_SIZE_96 = 96;
+    public static final int AVATAR_SIZE_132 = 132;
 }
