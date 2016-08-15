@@ -35,6 +35,9 @@ public class WechatProperties {
     @Value("${wechat.oauth.check.token.url}")
     private String checkOAuthTokenUrl;
 
+    @Value("${wechat.jsapi.ticket.url}")
+    private String jsApiTicketUrl;
+
     public String getAppID() {
         return appID;
     }
@@ -105,5 +108,13 @@ public class WechatProperties {
 
     public void setCheckOAuthTokenUrl(String checkOAuthTokenUrl) {
         this.checkOAuthTokenUrl = checkOAuthTokenUrl;
+    }
+
+    public String getJsApiTicketUrl() {
+        return jsApiTicketUrl;
+    }
+
+    public void setJsApiTicketUrl(String jsApiTicketUrl) {
+        this.jsApiTicketUrl = jsApiTicketUrl;
     }
 }

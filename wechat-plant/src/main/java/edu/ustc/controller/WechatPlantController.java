@@ -1,13 +1,9 @@
 package edu.ustc.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
-import com.google.common.hash.HashFunction;
-import com.google.common.hash.Hashing;
-import edu.ustc.config.WechatConstants;
 import edu.ustc.dto.VerificationRequest;
 import edu.ustc.dto.WechatMessage;
+import edu.ustc.pojo.JsApiConfig;
 import edu.ustc.pojo.WechatUserInfo;
 import edu.ustc.service.WechatPlantService;
 import edu.ustc.utils.JaxbUtils;
@@ -22,12 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.PrintWriter;
 
 @Controller
 @EnableAutoConfiguration
@@ -47,8 +40,8 @@ public class WechatPlantController {
         try {
             checkVerificationRequest(request);
 
-            String hashCode = encryptWithSHA1(concatVerificationInfo(request));
-            if(hashCode.equalsIgnoreCase(request.getSignature())) {
+            String signature = wechatPlantService.getSignature(request);
+            if(signature.equalsIgnoreCase(request.getSignature())) {
                 logger.info("verify request success, {}", JSON.toJSONString(request));
                 output(request, response);
             } else {
@@ -66,31 +59,11 @@ public class WechatPlantController {
         }
     }
 
-    private String concatVerificationInfo(VerificationRequest request) {
-
-        ArrayList<String> list = Lists.newArrayList(WechatConstants.WECHAT_PLANT_TOKEN, Strings.nullToEmpty(request.getTimestamp()), Strings.nullToEmpty(request.getNonce()));
-        Collections.sort(list);
-
-        StringBuilder sb = new StringBuilder();
-        for(String str : list) {
-            sb.append(str);
-        }
-
-        return sb.toString();
-    }
-
-    private String encryptWithSHA1(String verificationInfo) {
-        HashFunction hashFunction = Hashing.sha1();
-        return hashFunction.hashString(verificationInfo, Charset.defaultCharset()).toString();
-    }
-
     private void output(VerificationRequest request, HttpServletResponse response) throws IOException {
-
-        ServletOutputStream stream = response.getOutputStream();
-        stream.print(request.getEchostr());
-
-        stream.flush();
-        stream.close();
+        PrintWriter writer = response.getWriter();
+        writer.write(request.getEchostr());
+        writer.flush();
+        writer.close();
     }
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
@@ -110,6 +83,19 @@ public class WechatPlantController {
             }
         } catch (Exception e) {
             logger.error("push wechat message error, {}", e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/jsApiConfig", method = RequestMethod.GET)
+    @ResponseBody
+    public JsApiConfig getJsApiConfig(String url) {
+        try {
+            JsApiConfig jsApiConfig = wechatPlantService.getJsApiConfig(url);
+            logger.info("get js api config success, {}", JSON.toJSONString(jsApiConfig));
+            return jsApiConfig;
+        } catch (Exception e) {
+            logger.error("get js api config error, {}", e.getMessage());
+            return null;
         }
     }
 

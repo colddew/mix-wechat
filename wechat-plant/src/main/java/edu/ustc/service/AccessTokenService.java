@@ -23,12 +23,16 @@ public class AccessTokenService {
 
     private static final Logger logger = LoggerFactory.getLogger(AccessTokenService.class);
 
+    @Autowired
+    private WechatProperties wechatProperties;
+
     private String appID;
     private String appSecret;
     private WechatAccessToken wechatAccessToken;
 
-    @Autowired
-    private WechatProperties wechatProperties;
+    public WechatAccessToken getWechatAccessToken() {
+        return wechatAccessToken;
+    }
 
     @PostConstruct
     public void init() {
