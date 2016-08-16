@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class WechatPlantService {
@@ -35,11 +36,13 @@ public class WechatPlantService {
     @Autowired
     private AccessTokenService accessTokenService;
 
+    private Map<String, JsApiConfig> jsApiConfigMap = new ConcurrentHashMap<>();
+
     public String getSignature(VerificationRequest request) throws Exception {
         return encryptWithSHA1(concatVerificationInfo(request));
     }
 
-    private String concatVerificationInfo(VerificationRequest request) throws Exception {
+    private static String concatVerificationInfo(VerificationRequest request) throws Exception {
 
         ArrayList<String> list = Lists.newArrayList(WechatConstants.WECHAT_PLANT_TOKEN, Strings.nullToEmpty(request.getTimestamp()), Strings.nullToEmpty(request.getNonce()));
         Collections.sort(list);
@@ -83,18 +86,47 @@ public class WechatPlantService {
 
     public JsApiConfig getJsApiConfig(String url) throws Exception {
 
-        String jsApiTicketUrl = StringUtils.replaceEach(wechatProperties.getJsApiTicketUrl(), new String[]{"#ACCESS_TOKEN#"},
-                new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
+        if(needRefreshJsApiConfig(url)) {
 
-        String result = OkHttpUtils.synGetString(jsApiTicketUrl);
-        JsApiConfig jsApiConfig = JSON.parseObject(result, JsApiConfig.class);
-        if(!GlobalCode.CODE_OK.getCode().equals(jsApiConfig.getErrorCode())) {
-            throw new WechatException(jsApiConfig.getErrorCode(), jsApiConfig.getErrorMessage());
+            String jsApiTicketUrl = StringUtils.replaceEach(wechatProperties.getJsApiTicketUrl(), new String[]{"#ACCESS_TOKEN#"},
+                    new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
+
+            String result = OkHttpUtils.synGetString(jsApiTicketUrl);
+            JsApiConfig jsApiConfig = JSON.parseObject(result, JsApiConfig.class);
+            if(!GlobalCode.CODE_OK.getCode().equals(jsApiConfig.getErrorCode())) {
+                throw new WechatException(jsApiConfig.getErrorCode(), jsApiConfig.getErrorMessage());
+            }
+
+            supplement(jsApiConfig, url);
+            cache(jsApiConfig, url);
+
+            return jsApiConfig;
         }
 
-        supplement(jsApiConfig, url);
+        return jsApiConfigMap.get(url);
+    }
 
-        return jsApiConfig;
+    private boolean needRefreshJsApiConfig(String url) throws Exception {
+
+        if(StringUtils.isNotBlank(url)) {
+
+            if(jsApiConfigMap.containsKey(url)) {
+
+                JsApiConfig jsApiConfig = jsApiConfigMap.get(url);
+
+                long now = new Date().getTime();
+                long expiryStartTime = jsApiConfig.getExpiryStartTime().getTime();
+                long expiry = Long.parseLong(jsApiConfig.getExpiry()) * 1000;
+
+                if(now - expiryStartTime > expiry) {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void supplement(JsApiConfig jsApiConfig, String url) throws Exception {
@@ -102,7 +134,7 @@ public class WechatPlantService {
         if(StringUtils.isNotBlank(jsApiConfig.getExpiry())) {
 
             Date expiryStartTime = new Date();
-            String timestamp = String.valueOf(expiryStartTime.getTime());
+            String timestamp = Long.toString(System.currentTimeMillis() / 1000);
             String random = RandomStringUtils.randomAlphanumeric(16);
 
             jsApiConfig.setExpiryStartTime(expiryStartTime);
@@ -118,19 +150,22 @@ public class WechatPlantService {
 
         Map<String, String> map = new TreeMap<String, String>() {
             {
-                put(ticket, "jsapi_ticket");
-                put(random, "noncestr");
-                put(timestamp, "timestamp");
-                put(url, "url");
+                put("jsapi_ticket", ticket);
+                put("noncestr", random);
+                put("timestamp", timestamp);
+                put("url", url);
             }
         };
 
         StringBuilder sb = new StringBuilder();
-        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            sb.append(entry.getValue()).append("=").append(entry.getKey()).append("&");
+        for(Map.Entry entry : map.entrySet()) {
+            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
         }
 
         return sb.substring(0, sb.length() - 1);
+    }
+
+    private void cache(JsApiConfig jsApiConfig, String url) throws Exception {
+        jsApiConfigMap.put(url, jsApiConfig);
     }
 }
