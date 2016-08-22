@@ -1,9 +1,11 @@
+//url在JavaScript中是location.href.split('#')[0]获取
+
 wx.config({
-    debug: true,
+    debug: false,
     appId: 'wx9e3a65944f0150f9',
-    timestamp: 1471367293,
-    nonceStr: 'MyfVDTK5IvQlsrHU',
-    signature: '4e8b5958025f0d907c49b0557b5cc9983ba8465d',
+    timestamp: 1471884418,
+    nonceStr: 'tQaPUKLZajYhM8gD',
+    signature: '3efeb0686462f19736fdf5896684711e676953f5',
     jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'getNetworkType', 'openLocation', 'getLocation']
 });
 
@@ -11,10 +13,9 @@ wx.ready(function() {
     console.info("config for jsapi success...");
 });
 
-// wx.error(function(res) {
-//     // console.info(res);
-//     console.info("config for jsapi error...");
-// });
+wx.error(function(res) {
+    console.info("config for jsapi error...");
+});
 
 // wx.checkJsApi({
 //     jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'getNetworkType', 'openLocation', 'getLocation'],
@@ -34,7 +35,7 @@ wx.ready(function() {
 //
 //     }
 // });
-//
+
 // wx.onMenuShareAppMessage({
 //     title: '分享给朋友标题',
 //     desc: '分享描述',
@@ -62,17 +63,17 @@ wx.openLocation({
     longitude: 120.07,
     name: '黄龙',
     address: '黄龙时代广场',
-    scale: 5,
+    scale: 1,
     infoUrl: 'http://www.163.com'
 });
 
-wx.getLocation({
-    type: 'wgs84',
-    success: function(res) {
-        var latitude = res.latitude;
-        var longitude = res.longitude;
-        var speed = res.speed;
-        var accuracy = res.accuracy;
-        console.info(res);
-    }
-});
+// wx.getLocation({
+//     type: 'wgs84',
+//     success: function(res) {
+//         var latitude = res.latitude;
+//         var longitude = res.longitude;
+//         var speed = res.speed;
+//         var accuracy = res.accuracy;
+//         console.info(res);
+//     }
+// });
