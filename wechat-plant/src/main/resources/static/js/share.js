@@ -3,14 +3,10 @@
 wx.config({
     debug: false,
     appId: 'wx9e3a65944f0150f9',
-    timestamp: 1471884418,
-    nonceStr: 'tQaPUKLZajYhM8gD',
-    signature: '3efeb0686462f19736fdf5896684711e676953f5',
+    timestamp: 1471971207,
+    nonceStr: 'klsuFZGl8Y7RTYzT',
+    signature: 'e1ec0935e3f074070d1a6ff4d5b7b753dbf3ecf6',
     jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'getNetworkType', 'openLocation', 'getLocation']
-});
-
-wx.ready(function() {
-    console.info("config for jsapi success...");
 });
 
 wx.error(function(res) {
@@ -24,48 +20,12 @@ wx.error(function(res) {
 //     }
 // });
 
-// wx.onMenuShareTimeline({
-//     title: '分享到朋友圈标题',
-//     link: '',
-//     imgUrl: '',
-//     success: function() {
-//
-//     },
-//     cancel: function() {
-//
-//     }
-// });
-
-// wx.onMenuShareAppMessage({
-//     title: '分享给朋友标题',
-//     desc: '分享描述',
-//     link: '',
-//     imgUrl: '',
-//     type: 'link',
-//     dataUrl: '',
-//     success: function() {
-//
-//     },
-//     cancel: function() {
-//
-//     }
-// });
-
 // wx.getNetworkType({
 //     success: function(res) {
 //         var networkType = res.networkType;
 //         console.info(networkType);
 //     }
 // });
-
-wx.openLocation({
-    latitude: 30.16,
-    longitude: 120.07,
-    name: '黄龙',
-    address: '黄龙时代广场',
-    scale: 1,
-    infoUrl: 'http://www.163.com'
-});
 
 // wx.getLocation({
 //     type: 'wgs84',
@@ -77,3 +37,76 @@ wx.openLocation({
 //         console.info(res);
 //     }
 // });
+
+angular.module("plantApp", [])
+
+.controller("plantController", function ($scope, $http, $location) {
+
+    wx.ready(function() {
+
+        console.info("config for jsapi success...");
+
+        $scope.openLocation = function () {
+            wx.openLocation({
+                latitude: 23.099994,
+                longitude: 113.324520,
+                name: 'TIT 创意园',
+                address: '广州市海珠区新港中路 397 号',
+                scale: 14,
+                infoUrl: 'http://weixin.qq.com'
+            });
+        };
+
+        $scope.shareAppMessage = function () {
+
+            wx.onMenuShareAppMessage({
+                title: '互联网之子',
+                desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
+                link: 'http://movie.douban.com/subject/25785114/',
+                imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                // type: 'link',
+                // dataUrl: '',
+                trigger: function () {
+                    alert('用户点击发送给朋友');
+                },
+                success: function () {
+                    alert('已分享');
+                },
+                cancel: function () {
+                    alert('已取消');
+                },
+                fail: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            });
+        };
+
+        $scope.shareTimeline = function () {
+
+            wx.onMenuShareTimeline({
+                title: '互联网之子',
+                link: 'http://movie.douban.com/subject/25785114/',
+                imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                trigger: function () {
+                    alert('用户点击分享到朋友圈');
+                },
+                success: function () {
+                    alert('已分享');
+                },
+                cancel: function () {
+                    alert('已取消');
+                },
+                fail: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            });
+        };
+    });
+})
+
+.config(function($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+});

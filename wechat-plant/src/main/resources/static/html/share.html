@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" ng-app>
+<html lang="zh-CN" ng-app="plantApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,11 @@
 <body>
 
 <div class="container">
-    <h1>share</h1>
+    <div ng-controller="plantController">
+        <button class="btn btn-primary" ng-click="openLocation()">我的位置</button>
+        <button class="btn btn-primary" ng-click="shareAppMessage()">分享给朋友</button>
+        <button class="btn btn-primary" ng-click="shareTimeline()">分享到朋友圈</button>
+    </div>
 </div>
 
 <!--<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>-->
