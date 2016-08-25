@@ -2,8 +2,9 @@ angular.module("plantApp", [])
 
 .controller("plantController", function ($scope, $http, $location) {
 
-    var code = $location.search().code;
-    var state = $location.search().state;
+    var code = $location.search().code;     // indispensable
+    var state = $location.search().state;   // just for self-defined checking
+    
     if(code && state) {
 
         var oAuthTokenUrl = "/oAuthToken/wechat?code=" + code + "&state=" + state;
@@ -13,7 +14,7 @@ angular.module("plantApp", [])
             console.info(oAuthToken.data);
             console.info(oAuthToken.data.openid);
 
-            //TODO do something if binding openid with user info
+            //TODO don't need user's permission, get user info indirectly if binding openid with user info
         });
     }
 })

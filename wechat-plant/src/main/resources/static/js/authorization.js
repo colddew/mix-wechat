@@ -17,6 +17,7 @@ angular.module("plantApp", [])
 
     var code = $location.search().code;
     var state = $location.search().state;
+
     if(code && state) {
 
         var userInfoUrl = "/plant/userInfo?code=" + code + "&state=" + state;
