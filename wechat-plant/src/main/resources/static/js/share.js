@@ -3,9 +3,9 @@
 wx.config({
     debug: false,
     appId: 'wx9e3a65944f0150f9',
-    timestamp: 1471971207,
-    nonceStr: 'klsuFZGl8Y7RTYzT',
-    signature: 'e1ec0935e3f074070d1a6ff4d5b7b753dbf3ecf6',
+    timestamp: 1472055867,
+    nonceStr: 'sRCikZeuKiCOZ7oN',
+    signature: '176385337c55ccb3ee41766235b1ae19096b4e15',
     jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'getNetworkType', 'openLocation', 'getLocation']
 });
 
@@ -64,8 +64,8 @@ angular.module("plantApp", [])
                 desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
                 link: 'http://movie.douban.com/subject/25785114/',
                 imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
-                // type: 'link',
-                // dataUrl: '',
+                type: 'link',
+                dataUrl: '',
                 trigger: function () {
                     alert('用户点击发送给朋友');
                 },
