@@ -20,13 +20,6 @@
 //     }
 // });
 
-// wx.getNetworkType({
-//     success: function(res) {
-//         var networkType = res.networkType;
-//         console.info(networkType);
-//     }
-// });
-
 // wx.getLocation({
 //     type: 'wgs84',
 //     success: function(res) {
@@ -124,6 +117,15 @@ angular.module("plantApp", [])
                         }
                     });
                 };
+
+                $scope.getNetworkType = function () {
+
+                    wx.getNetworkType({
+                        success: function(res) {
+                            alert(res.networkType);
+                        }
+                    });
+                }
             });
         });
     }
