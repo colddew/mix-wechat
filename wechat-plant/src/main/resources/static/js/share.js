@@ -1,18 +1,3 @@
-//url在JavaScript中是location.href.split('#')[0]获取
-
-// wx.config({
-//     debug: false,
-//     appId: 'wx9e3a65944f0150f9',
-//     timestamp: 1472055867,
-//     nonceStr: 'sRCikZeuKiCOZ7oN',
-//     signature: '176385337c55ccb3ee41766235b1ae19096b4e15',
-//     jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'getNetworkType', 'openLocation', 'getLocation']
-// });
-
-// wx.error(function(res) {
-//     console.info("config for jsapi error...");
-// });
-
 // wx.checkJsApi({
 //     jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'getNetworkType', 'openLocation', 'getLocation'],
 //     success: function(res) {
