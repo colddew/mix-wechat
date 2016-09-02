@@ -24,7 +24,7 @@ import java.io.PrintWriter;
 
 @Controller
 @EnableAutoConfiguration
-    @RequestMapping("/plant")
+@RequestMapping("/plant")
 public class WechatPlantController {
 
     private static final Logger logger = LoggerFactory.getLogger(WechatPlantController.class);
@@ -32,7 +32,7 @@ public class WechatPlantController {
     @Autowired
     private WechatPlantService wechatPlantService;
 
-    // ----------------------------- link to wechat start -----------------------------
+    // ----------------------------- link to wechat -----------------------------
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public void verify(VerificationRequest request, HttpServletResponse response) {
@@ -99,7 +99,7 @@ public class WechatPlantController {
         }
     }
 
-    // ----------------------------- link to wechat end -----------------------------
+    // ----------------------------- get user info -----------------------------
 
     @RequestMapping(value = "/wechatUserInfo", method = RequestMethod.GET)
     @ResponseBody
@@ -124,6 +124,17 @@ public class WechatPlantController {
         } catch (Exception e) {
             logger.error("get user info error, {}", e.getMessage());
             return null;
+        }
+    }
+
+    // ----------------------------- manipulate menu -----------------------------
+
+    @RequestMapping(value = "/menu", method = RequestMethod.POST)
+    public void createMenu() {
+        try {
+            wechatPlantService.createMenu();
+        } catch (Exception e) {
+            logger.error("create menu error, {}", e.getMessage());
         }
     }
 }

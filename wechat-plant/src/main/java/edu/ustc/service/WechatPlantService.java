@@ -168,4 +168,41 @@ public class WechatPlantService {
     private void cache(JsApiConfig jsApiConfig, String url) throws Exception {
         jsApiConfigMap.put(url, jsApiConfig);
     }
+
+    public void createMenu() throws Exception {
+
+        String json = "{\n" +
+                "     \"button\":[\n" +
+                "     {\t\n" +
+                "          \"type\":\"click\",\n" +
+                "          \"name\":\"今日歌曲\",\n" +
+                "          \"key\":\"V1001_TODAY_MUSIC\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "           \"name\":\"菜单\",\n" +
+                "           \"sub_button\":[\n" +
+                "           {\t\n" +
+                "               \"type\":\"view\",\n" +
+                "               \"name\":\"搜索\",\n" +
+                "               \"url\":\"http://www.soso.com/\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "               \"type\":\"view\",\n" +
+                "               \"name\":\"视频\",\n" +
+                "               \"url\":\"http://v.qq.com/\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "               \"type\":\"click\",\n" +
+                "               \"name\":\"赞一下我们\",\n" +
+                "               \"key\":\"V1001_GOOD\"\n" +
+                "            }]\n" +
+                "       }]\n" +
+                " }";
+
+        String createMenuUrl = StringUtils.replaceEach(wechatProperties.getCreateMenuUrl(), new String[]{"#ACCESS_TOKEN#"},
+                new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
+
+        String result = OkHttpUtils.synPostJson(createMenuUrl, json);
+        System.out.println(result);
+    }
 }

@@ -1,21 +1,3 @@
-// wx.checkJsApi({
-//     jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'getNetworkType', 'openLocation', 'getLocation'],
-//     success: function(res) {
-//         console.info("check for jsapi...");
-//     }
-// });
-
-// wx.getLocation({
-//     type: 'wgs84',
-//     success: function(res) {
-//         var latitude = res.latitude;
-//         var longitude = res.longitude;
-//         var speed = res.speed;
-//         var accuracy = res.accuracy;
-//         console.info(res);
-//     }
-// });
-
 angular.module("plantApp", [])
 
 .controller("plantController", function ($scope, $http, $location) {
@@ -55,6 +37,20 @@ angular.module("plantApp", [])
                         address: '广州市海珠区新港中路 397 号',
                         scale: 14,
                         infoUrl: 'http://weixin.qq.com'
+                    });
+                };
+
+                $scope.getLocation = function () {
+
+                    wx.getLocation({
+                        type: 'wgs84',
+                        success: function(res) {
+                            var latitude = res.latitude;
+                            var longitude = res.longitude;
+                            var speed = res.speed;
+                            var accuracy = res.accuracy;
+                            alert(JSON.stringify(res));
+                        }
                     });
                 };
 

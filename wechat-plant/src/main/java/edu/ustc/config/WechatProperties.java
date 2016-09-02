@@ -38,6 +38,15 @@ public class WechatProperties {
     @Value("${wechat.jsapi.ticket.url}")
     private String jsApiTicketUrl;
 
+    @Value("${wechat.menu.create.url}")
+    private String createMenuUrl;
+
+    @Value("${wechat.menu.get.url}")
+    private String getMenuUrl;
+
+    @Value("${wechat.menu.delete.url}")
+    private String deleteMenuUrl;
+
     public String getAppID() {
         return appID;
     }
@@ -116,5 +125,29 @@ public class WechatProperties {
 
     public void setJsApiTicketUrl(String jsApiTicketUrl) {
         this.jsApiTicketUrl = jsApiTicketUrl;
+    }
+
+    public String getCreateMenuUrl() {
+        return createMenuUrl;
+    }
+
+    public void setCreateMenuUrl(String createMenuUrl) {
+        this.createMenuUrl = createMenuUrl;
+    }
+
+    public String getGetMenuUrl() {
+        return getMenuUrl;
+    }
+
+    public void setGetMenuUrl(String getMenuUrl) {
+        this.getMenuUrl = getMenuUrl;
+    }
+
+    public String getDeleteMenuUrl() {
+        return deleteMenuUrl;
+    }
+
+    public void setDeleteMenuUrl(String deleteMenuUrl) {
+        this.deleteMenuUrl = deleteMenuUrl;
     }
 }
