@@ -130,11 +130,13 @@ public class WechatPlantController {
     // ----------------------------- manipulate menu -----------------------------
 
     @RequestMapping(value = "/menu", method = RequestMethod.POST)
-    public void createMenu() {
+    @ResponseBody
+    public String createMenu() {
         try {
-            wechatPlantService.createMenu();
+            return wechatPlantService.createMenu();
         } catch (Exception e) {
             logger.error("create menu error, {}", e.getMessage());
+            return e.getMessage();
         }
     }
 }

@@ -1,18 +1,14 @@
 package edu.ustc.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import edu.ustc.config.GlobalCode;
-import edu.ustc.config.WechatConstants;
-import edu.ustc.config.WechatException;
-import edu.ustc.config.WechatProperties;
+import edu.ustc.config.*;
 import edu.ustc.dto.VerificationRequest;
-import edu.ustc.pojo.JsApiConfig;
-import edu.ustc.pojo.WechatOAuthToken;
-import edu.ustc.pojo.WechatUserInfo;
+import edu.ustc.pojo.*;
 import edu.ustc.utils.OkHttpUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -169,40 +165,120 @@ public class WechatPlantService {
         jsApiConfigMap.put(url, jsApiConfig);
     }
 
-    public void createMenu() throws Exception {
-
-        String json = "{\n" +
-                "     \"button\":[\n" +
-                "     {\t\n" +
-                "          \"type\":\"click\",\n" +
-                "          \"name\":\"今日歌曲\",\n" +
-                "          \"key\":\"V1001_TODAY_MUSIC\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "           \"name\":\"菜单\",\n" +
-                "           \"sub_button\":[\n" +
-                "           {\t\n" +
-                "               \"type\":\"view\",\n" +
-                "               \"name\":\"搜索\",\n" +
-                "               \"url\":\"http://www.soso.com/\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "               \"type\":\"view\",\n" +
-                "               \"name\":\"视频\",\n" +
-                "               \"url\":\"http://v.qq.com/\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "               \"type\":\"click\",\n" +
-                "               \"name\":\"赞一下我们\",\n" +
-                "               \"key\":\"V1001_GOOD\"\n" +
-                "            }]\n" +
-                "       }]\n" +
-                " }";
+    public String createMenu() throws Exception {
 
         String createMenuUrl = StringUtils.replaceEach(wechatProperties.getCreateMenuUrl(), new String[]{"#ACCESS_TOKEN#"},
                 new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
 
-        String result = OkHttpUtils.synPostJson(createMenuUrl, json);
-        System.out.println(result);
+        String result = OkHttpUtils.synPostJson(createMenuUrl, assembleMenu());
+        JSONObject object = JSON.parseObject(result);
+        if(!GlobalCode.CODE_OK.getCode().equals(object.getString("errcode"))) {
+            throw new WechatException(object.getString("errcode"), object.getString("errmsg"));
+        }
+
+        return object.getString("errmsg");
+    }
+
+    private String assembleMenu() {
+
+        WechatSubMenu subMenu1 = new WechatSubMenu();
+        subMenu1.setType(MenuType.CLICK.getCode());
+        subMenu1.setName(MenuBrief.CLICK_DAILY_RECOMMEND.getDescription());
+        subMenu1.setKey(MenuBrief.CLICK_DAILY_RECOMMEND.getCode());
+
+        WechatSubMenu subMenu2 = new WechatSubMenu();
+        subMenu2.setType(MenuType.VIEW.getCode());
+        subMenu2.setName(MenuBrief.VIEW_SEARCH.getDescription());
+        subMenu2.setUrl(MenuBrief.VIEW_SEARCH.getUrl());
+
+        WechatSubMenu subMenu3 = new WechatSubMenu();
+        subMenu3.setType(MenuType.VIEW.getCode());
+        subMenu3.setName(MenuBrief.VIEW_VIDEO.getDescription());
+        subMenu3.setUrl(MenuBrief.VIEW_VIDEO.getUrl());
+
+        WechatSubMenu subMenu4 = new WechatSubMenu();
+        subMenu4.setType(MenuType.CLICK.getCode());
+        subMenu4.setName(MenuBrief.CLICK_STAR.getDescription());
+        subMenu4.setKey(MenuBrief.CLICK_STAR.getCode());
+
+        WechatSubMenu subMenu5 = new WechatSubMenu();
+        subMenu5.setType(MenuType.SCANCODE_PUSH.getCode());
+        subMenu5.setName(MenuBrief.SCANCODE_PUSH_SCANCODE.getDescription());
+        subMenu5.setKey(MenuBrief.SCANCODE_PUSH_SCANCODE.getCode());
+
+        WechatSubMenu subMenu6 = new WechatSubMenu();
+        subMenu6.setType(MenuType.SCANCODE_WAITMSG.getCode());
+        subMenu6.setName(MenuBrief.SCANCODE_WAITMSG_SCANCODE.getDescription());
+        subMenu6.setKey(MenuBrief.SCANCODE_WAITMSG_SCANCODE.getCode());
+
+        WechatSubMenu subMenu7 = new WechatSubMenu();
+        subMenu7.setType(MenuType.PIC_SYSPHOTO.getCode());
+        subMenu7.setName(MenuBrief.PIC_SYSPHOTO_PHOTO.getDescription());
+        subMenu7.setKey(MenuBrief.PIC_SYSPHOTO_PHOTO.getCode());
+
+        WechatSubMenu subMenu8 = new WechatSubMenu();
+        subMenu8.setType(MenuType.PIC_PHOTO_OR_ALBUM.getCode());
+        subMenu8.setName(MenuBrief.PIC_PHOTO_OR_ALBUM_PHOTO.getDescription());
+        subMenu8.setKey(MenuBrief.PIC_PHOTO_OR_ALBUM_PHOTO.getCode());
+
+        WechatSubMenu subMenu9 = new WechatSubMenu();
+        subMenu9.setType(MenuType.PIC_WEIXIN.getCode());
+        subMenu9.setName(MenuBrief.PIC_WEIXIN_ALBUM.getDescription());
+        subMenu9.setKey(MenuBrief.PIC_WEIXIN_ALBUM.getCode());
+
+        WechatSubMenu subMenu10 = new WechatSubMenu();
+        subMenu10.setType(MenuType.LOCATION_SELECT.getCode());
+        subMenu10.setName(MenuBrief.LOCATION_SELECT_LOCATION.getDescription());
+        subMenu10.setKey(MenuBrief.LOCATION_SELECT_LOCATION.getCode());
+
+        WechatSubMenu subMenu11 = new WechatSubMenu();
+        subMenu11.setType(MenuType.MEDIA_ID.getCode());
+        subMenu11.setName(MenuBrief.MEDIA_ID_PICTURE.getDescription());
+        subMenu11.setMediaId(MenuBrief.MEDIA_ID_PICTURE.getCode());
+
+        WechatSubMenu subMenu12 = new WechatSubMenu();
+        subMenu12.setType(MenuType.VIEW_LIMITED.getCode());
+        subMenu12.setName(MenuBrief.VIEW_LIMITED_MESSAGE.getDescription());
+        subMenu12.setMediaId(MenuBrief.VIEW_LIMITED_MESSAGE.getCode());
+
+        List<WechatSubMenu> subMenuList1 = new ArrayList<>();
+        subMenuList1.add(subMenu1);
+        subMenuList1.add(subMenu2);
+        subMenuList1.add(subMenu3);
+        subMenuList1.add(subMenu4);
+
+        List<WechatSubMenu> subMenuList2 = new ArrayList<>();
+        subMenuList2.add(subMenu5);
+        subMenuList2.add(subMenu6);
+        subMenuList2.add(subMenu7);
+        subMenuList2.add(subMenu8);
+        subMenuList2.add(subMenu9);
+
+        List<WechatSubMenu> subMenuList3 = new ArrayList<>();
+        subMenuList3.add(subMenu10);
+//        subMenuList3.add(subMenu11);      // need input existed wechat resource id
+//        subMenuList3.add(subMenu12);
+
+        WechatSubMenu menu1 = new WechatSubMenu();
+        menu1.setName("点击/跳转");
+        menu1.setSubButton(subMenuList1);
+
+        WechatSubMenu menu2 = new WechatSubMenu();
+        menu2.setName("扫码/发图");
+        menu2.setSubButton(subMenuList2);
+
+        WechatSubMenu menu3 = new WechatSubMenu();
+        menu3.setName("位置/素材");
+        menu3.setSubButton(subMenuList3);
+
+        List<WechatSubMenu> menuList = new ArrayList<>();
+        menuList.add(menu1);
+        menuList.add(menu2);
+        menuList.add(menu3);
+
+        WechatMenu menu = new WechatMenu();
+        menu.setButton(menuList);
+
+        return JSON.toJSONString(menu);
     }
 }

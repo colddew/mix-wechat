@@ -1,5 +1,5 @@
 package edu.ustc.config;
 
 public enum MessageType {
-    EVENT, TEXT;
+    event, text, image, location;
 }

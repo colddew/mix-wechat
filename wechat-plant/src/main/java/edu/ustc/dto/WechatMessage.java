@@ -25,6 +25,9 @@ public class WechatMessage implements Serializable {
     @XmlElement(name = "Event")
     private String event;
 
+    @XmlElement(name = "EventKey")
+    private String eventKey;
+
     @XmlElement(name = "Latitude")
     private String latitude;
 
@@ -39,6 +42,21 @@ public class WechatMessage implements Serializable {
 
     @XmlElement(name = "MsgId")
     private String messageID;
+
+    @XmlElement(name = "MenuId")
+    private String menuId;
+
+    @XmlElement(name = "PicUrl")
+    private String pictureUrl;
+
+    @XmlElement(name = "MediaId")
+    private String mediaId;
+
+    @XmlElement(name = "ScanCodeInfo")
+    private ScanCodeInfo scanCodeInfo;
+
+    @XmlElement(name = "SendLocationInfo")
+    private SendLocationInfo sendLocationInfo;
 
     public String getToUserName() {
         return toUserName;
@@ -80,6 +98,14 @@ public class WechatMessage implements Serializable {
         this.event = event;
     }
 
+    public String getEventKey() {
+        return eventKey;
+    }
+
+    public void setEventKey(String eventKey) {
+        this.eventKey = eventKey;
+    }
+
     public String getLatitude() {
         return latitude;
     }
@@ -118,5 +144,37 @@ public class WechatMessage implements Serializable {
 
     public void setMessageID(String messageID) {
         this.messageID = messageID;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public String getMediaId() {
+        return mediaId;
+    }
+
+    public void setMediaId(String mediaId) {
+        this.mediaId = mediaId;
+    }
+
+    public ScanCodeInfo getScanCodeInfo() {
+        return scanCodeInfo;
+    }
+
+    public void setScanCodeInfo(ScanCodeInfo scanCodeInfo) {
+        this.scanCodeInfo = scanCodeInfo;
     }
 }
