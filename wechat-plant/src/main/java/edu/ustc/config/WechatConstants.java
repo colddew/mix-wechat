@@ -15,4 +15,10 @@ public class WechatConstants {
     public static final int AVATAR_SIZE_64 = 64;
     public static final int AVATAR_SIZE_96 = 96;
     public static final int AVATAR_SIZE_132 = 132;
+
+    public static final int IS_MENU_OPEN_NO = 0;
+    public static final int IS_MENU_OPEN_YES = 1;
+
+    public static final int SHOW_COVER_NO = 0;
+    public static final int SHOW_COVER_YES = 1;
 }

@@ -1,6 +1,7 @@
 package edu.ustc.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import edu.ustc.dto.VerificationRequest;
 import edu.ustc.dto.WechatMessage;
 import edu.ustc.pojo.JsApiConfig;
@@ -137,6 +138,17 @@ public class WechatPlantController {
         } catch (Exception e) {
             logger.error("create menu error, {}", e.getMessage());
             return e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject getMenu() {
+        try {
+            return wechatPlantService.getMenu();
+        } catch (Exception e) {
+            logger.error("get menu error, {}", e.getMessage());
+            return null;
         }
     }
 }

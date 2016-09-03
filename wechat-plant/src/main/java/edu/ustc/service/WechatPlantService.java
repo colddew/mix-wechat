@@ -281,4 +281,14 @@ public class WechatPlantService {
 
         return JSON.toJSONString(menu);
     }
+
+    public JSONObject getMenu() throws Exception {
+
+        String getMenuUrl = StringUtils.replaceEach(wechatProperties.getGetMenuUrl(), new String[]{"#ACCESS_TOKEN#"},
+                new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
+
+        String result = OkHttpUtils.synGetString(getMenuUrl);
+
+        return JSON.parseObject(result);
+    }
 }
