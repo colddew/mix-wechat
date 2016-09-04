@@ -79,6 +79,9 @@ public class WechatMessage implements Serializable {
     @XmlElement(name = "Url")
     private String url;
 
+    @XmlElement(name = "Ticket")
+    private String ticket;
+
     private ScanCodeInfo scanCodeInfo;
 
     private SendLocationInfo sendLocationInfo;
@@ -275,6 +278,14 @@ public class WechatMessage implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
     }
 
     public ScanCodeInfo getScanCodeInfo() {

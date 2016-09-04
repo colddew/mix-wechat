@@ -182,62 +182,62 @@ public class WechatPlantService {
     private String assembleMenu() {
 
         WechatSubMenu subMenu1 = new WechatSubMenu();
-        subMenu1.setType(MenuType.CLICK.getCode());
+        subMenu1.setType(EventType.CLICK.getCode());
         subMenu1.setName(MenuBrief.CLICK_DAILY_RECOMMEND.getDescription());
         subMenu1.setKey(MenuBrief.CLICK_DAILY_RECOMMEND.getCode());
 
         WechatSubMenu subMenu2 = new WechatSubMenu();
-        subMenu2.setType(MenuType.VIEW.getCode());
+        subMenu2.setType(EventType.VIEW.getCode());
         subMenu2.setName(MenuBrief.VIEW_SEARCH.getDescription());
         subMenu2.setUrl(MenuBrief.VIEW_SEARCH.getUrl());
 
         WechatSubMenu subMenu3 = new WechatSubMenu();
-        subMenu3.setType(MenuType.VIEW.getCode());
+        subMenu3.setType(EventType.VIEW.getCode());
         subMenu3.setName(MenuBrief.VIEW_VIDEO.getDescription());
         subMenu3.setUrl(MenuBrief.VIEW_VIDEO.getUrl());
 
         WechatSubMenu subMenu4 = new WechatSubMenu();
-        subMenu4.setType(MenuType.CLICK.getCode());
+        subMenu4.setType(EventType.CLICK.getCode());
         subMenu4.setName(MenuBrief.CLICK_STAR.getDescription());
         subMenu4.setKey(MenuBrief.CLICK_STAR.getCode());
 
         WechatSubMenu subMenu5 = new WechatSubMenu();
-        subMenu5.setType(MenuType.SCANCODE_PUSH.getCode());
+        subMenu5.setType(EventType.SCANCODE_PUSH.getCode());
         subMenu5.setName(MenuBrief.SCANCODE_PUSH_SCANCODE.getDescription());
         subMenu5.setKey(MenuBrief.SCANCODE_PUSH_SCANCODE.getCode());
 
         WechatSubMenu subMenu6 = new WechatSubMenu();
-        subMenu6.setType(MenuType.SCANCODE_WAITMSG.getCode());
+        subMenu6.setType(EventType.SCANCODE_WAITMSG.getCode());
         subMenu6.setName(MenuBrief.SCANCODE_WAITMSG_SCANCODE.getDescription());
         subMenu6.setKey(MenuBrief.SCANCODE_WAITMSG_SCANCODE.getCode());
 
         WechatSubMenu subMenu7 = new WechatSubMenu();
-        subMenu7.setType(MenuType.PIC_SYSPHOTO.getCode());
+        subMenu7.setType(EventType.PIC_SYSPHOTO.getCode());
         subMenu7.setName(MenuBrief.PIC_SYSPHOTO_PHOTO.getDescription());
         subMenu7.setKey(MenuBrief.PIC_SYSPHOTO_PHOTO.getCode());
 
         WechatSubMenu subMenu8 = new WechatSubMenu();
-        subMenu8.setType(MenuType.PIC_PHOTO_OR_ALBUM.getCode());
+        subMenu8.setType(EventType.PIC_PHOTO_OR_ALBUM.getCode());
         subMenu8.setName(MenuBrief.PIC_PHOTO_OR_ALBUM_PHOTO.getDescription());
         subMenu8.setKey(MenuBrief.PIC_PHOTO_OR_ALBUM_PHOTO.getCode());
 
         WechatSubMenu subMenu9 = new WechatSubMenu();
-        subMenu9.setType(MenuType.PIC_WEIXIN.getCode());
+        subMenu9.setType(EventType.PIC_WEIXIN.getCode());
         subMenu9.setName(MenuBrief.PIC_WEIXIN_ALBUM.getDescription());
         subMenu9.setKey(MenuBrief.PIC_WEIXIN_ALBUM.getCode());
 
         WechatSubMenu subMenu10 = new WechatSubMenu();
-        subMenu10.setType(MenuType.LOCATION_SELECT.getCode());
+        subMenu10.setType(EventType.LOCATION_SELECT.getCode());
         subMenu10.setName(MenuBrief.LOCATION_SELECT_LOCATION.getDescription());
         subMenu10.setKey(MenuBrief.LOCATION_SELECT_LOCATION.getCode());
 
         WechatSubMenu subMenu11 = new WechatSubMenu();
-        subMenu11.setType(MenuType.MEDIA_ID.getCode());
+        subMenu11.setType(EventType.MEDIA_ID.getCode());
         subMenu11.setName(MenuBrief.MEDIA_ID_PICTURE.getDescription());
         subMenu11.setMediaId(MenuBrief.MEDIA_ID_PICTURE.getCode());
 
         WechatSubMenu subMenu12 = new WechatSubMenu();
-        subMenu12.setType(MenuType.VIEW_LIMITED.getCode());
+        subMenu12.setType(EventType.VIEW_LIMITED.getCode());
         subMenu12.setName(MenuBrief.VIEW_LIMITED_MESSAGE.getDescription());
         subMenu12.setMediaId(MenuBrief.VIEW_LIMITED_MESSAGE.getCode());
 

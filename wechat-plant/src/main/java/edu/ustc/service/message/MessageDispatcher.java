@@ -1,7 +1,7 @@
 package edu.ustc.service.message;
 
 import edu.ustc.config.ErrorCode;
-import edu.ustc.config.MenuType;
+import edu.ustc.config.EventType;
 import edu.ustc.config.MessageType;
 import edu.ustc.config.WechatException;
 import edu.ustc.dto.WechatMessage;
@@ -25,7 +25,7 @@ public class MessageDispatcher {
     private PictureMessageHandler pictureMessageHandler;
 
     @Resource
-    private LocationMessageHandler locationMessageHandler;
+    private LocationSelectMessageHandler locationSelectMessageHandler;
 
     @Resource
     private TextMessageHandler textMessageHandler;
@@ -39,28 +39,40 @@ public class MessageDispatcher {
     @Resource
     private LinkMessageHandler linkMessageHandler;
 
+    @Resource
+    private SubscribeMessageHandler subscribeMessageHandler;
+
+    @Resource
+    private UnSubscribeMessageHandler unSubscribeMessageHandler;
+
+    @Resource
+    private ScanMessageHandler scanMessageHandler;
+
+    @Resource
+    private LocationMessageHandler locationMessageHandler;
+
     public MessageHandler dispatch(WechatMessage message) throws WechatException {
 
-        if(MessageType.event.name().equals(message.getMessageType()) && MenuType.CLICK.getCode().equalsIgnoreCase(message.getEvent())) {
+        if(MessageType.event.name().equals(message.getMessageType()) && EventType.CLICK.getCode().equalsIgnoreCase(message.getEvent())) {
             return clickMessageHandler;
-        } else if(MessageType.event.name().equals(message.getMessageType()) && MenuType.VIEW.getCode().equalsIgnoreCase(message.getEvent())) {
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.VIEW.getCode().equalsIgnoreCase(message.getEvent())) {
             return viewMessageHandler;
-        } else if(MessageType.event.name().equals(message.getMessageType()) && MenuType.SCANCODE_PUSH.getCode().equalsIgnoreCase(message.getEvent())) {
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.SCANCODE_PUSH.getCode().equalsIgnoreCase(message.getEvent())) {
             return scanCodeMessageHandler;
-        } else if(MessageType.event.name().equals(message.getMessageType()) && MenuType.SCANCODE_WAITMSG.getCode().equalsIgnoreCase(message.getEvent())) {
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.SCANCODE_WAITMSG.getCode().equalsIgnoreCase(message.getEvent())) {
             return scanCodeMessageHandler;
-        } else if(MessageType.event.name().equals(message.getMessageType()) && MenuType.PIC_SYSPHOTO.getCode().equalsIgnoreCase(message.getEvent())) {
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.PIC_SYSPHOTO.getCode().equalsIgnoreCase(message.getEvent())) {
             return pictureMessageHandler;       // validate photo md5 checksum
-        } else if(MessageType.event.name().equals(message.getMessageType()) && MenuType.PIC_PHOTO_OR_ALBUM.getCode().equalsIgnoreCase(message.getEvent())) {
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.PIC_PHOTO_OR_ALBUM.getCode().equalsIgnoreCase(message.getEvent())) {
             return pictureMessageHandler;       // validate photo or album md5 checksum
-        } else if(MessageType.event.name().equals(message.getMessageType()) && MenuType.PIC_WEIXIN.getCode().equalsIgnoreCase(message.getEvent())) {
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.PIC_WEIXIN.getCode().equalsIgnoreCase(message.getEvent())) {
             return pictureMessageHandler;       // validate album md5 checksum
         } else if(MessageType.image.name().equals(message.getMessageType())) {
             return pictureMessageHandler;       // for md5 checksum
-        } else if(MessageType.event.name().equals(message.getMessageType()) && MenuType.LOCATION_SELECT.getCode().equalsIgnoreCase(message.getEvent())) {
-            return locationMessageHandler;      // fetch picture url
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.LOCATION_SELECT.getCode().equalsIgnoreCase(message.getEvent())) {
+            return locationSelectMessageHandler;      // fetch picture url
         } else if(MessageType.location.name().equals(message.getMessageType())) {
-            return locationMessageHandler;      // latitude and longitude are more accurate
+            return locationSelectMessageHandler;      // latitude and longitude are more accurate
         } else if(MessageType.text.name().equals(message.getMessageType())) {
             return textMessageHandler;
         } else if(MessageType.voice.name().equals(message.getMessageType())) {
@@ -71,6 +83,14 @@ public class MessageDispatcher {
             return videoMessageHandler;
         } else if(MessageType.link.name().equals(message.getMessageType())) {
             return linkMessageHandler;
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.SUBSCRIBE.getCode().equalsIgnoreCase(message.getEvent())) {
+            return subscribeMessageHandler;     // need handle scan event if there is non-null ticket sent by unsubscribe user
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.UNSUBSCRIBE.getCode().equalsIgnoreCase(message.getEvent())) {
+            return unSubscribeMessageHandler;
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.SCAN.getCode().equalsIgnoreCase(message.getEvent())) {
+            return scanMessageHandler;
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.LOCATION.getCode().equalsIgnoreCase(message.getEvent())) {
+            return locationMessageHandler;
         } else {
             throw new WechatException(ErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.name(), ErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.getDescription());
         }
