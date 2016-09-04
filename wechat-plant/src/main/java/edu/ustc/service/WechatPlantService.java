@@ -89,7 +89,7 @@ public class WechatPlantService {
 
             String result = OkHttpUtils.synGetString(jsApiTicketUrl);
             JsApiConfig jsApiConfig = JSON.parseObject(result, JsApiConfig.class);
-            if(!GlobalCode.CODE_OK.getCode().equals(jsApiConfig.getErrorCode())) {
+            if(!WechatGlobalCode.CODE_OK.getCode().equals(jsApiConfig.getErrorCode())) {
                 throw new WechatException(jsApiConfig.getErrorCode(), jsApiConfig.getErrorMessage());
             }
 
@@ -172,7 +172,7 @@ public class WechatPlantService {
 
         String result = OkHttpUtils.synPostJson(createMenuUrl, assembleMenu());
         JSONObject object = JSON.parseObject(result);
-        if(!GlobalCode.CODE_OK.getCode().equals(object.getString("errcode"))) {
+        if(!WechatGlobalCode.CODE_OK.getCode().equals(object.getString("errcode"))) {
             throw new WechatException(object.getString("errcode"), object.getString("errmsg"));
         }
 

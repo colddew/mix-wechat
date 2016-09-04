@@ -7,6 +7,8 @@ import edu.ustc.dto.WechatMessage;
 import edu.ustc.pojo.JsApiConfig;
 import edu.ustc.pojo.WechatUserInfo;
 import edu.ustc.service.WechatPlantService;
+import edu.ustc.service.message.MessageDispatcher;
+import edu.ustc.service.message.MessageHandler;
 import edu.ustc.utils.JaxbUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class WechatPlantController {
 
     @Autowired
     private WechatPlantService wechatPlantService;
+
+    @Autowired
+    private MessageDispatcher messageDispatcher;
 
     // ----------------------------- link to wechat -----------------------------
 
@@ -77,6 +82,9 @@ public class WechatPlantController {
             if(StringUtils.isNotBlank(wechatMessage)) {
 
                 WechatMessage message = JaxbUtils.convertXmlToObject(wechatMessage, WechatMessage.class);
+
+                MessageHandler handler = messageDispatcher.dispatch(message);
+                handler.handle(message);
 
                 logger.info("push wechat message success");
             } else {
