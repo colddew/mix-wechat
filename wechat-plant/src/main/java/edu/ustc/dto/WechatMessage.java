@@ -61,6 +61,24 @@ public class WechatMessage implements Serializable {
     @XmlElement(name = "Label")
     private String label;
 
+    @XmlElement(name = "Format")
+    private String format;
+
+    @XmlElement(name = "Recognition")
+    private String recognition;
+
+    @XmlElement(name = "ThumbMediaId")
+    private String thumbMediaId;
+
+    @XmlElement(name = "Title")
+    private String title;
+
+    @XmlElement(name = "Description")
+    private String description;
+
+    @XmlElement(name = "Url")
+    private String url;
+
     private ScanCodeInfo scanCodeInfo;
 
     private SendLocationInfo sendLocationInfo;
@@ -209,6 +227,54 @@ public class WechatMessage implements Serializable {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getRecognition() {
+        return recognition;
+    }
+
+    public void setRecognition(String recognition) {
+        this.recognition = recognition;
+    }
+
+    public String getThumbMediaId() {
+        return thumbMediaId;
+    }
+
+    public void setThumbMediaId(String thumbMediaId) {
+        this.thumbMediaId = thumbMediaId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public ScanCodeInfo getScanCodeInfo() {

@@ -27,6 +27,18 @@ public class MessageDispatcher {
     @Resource
     private LocationMessageHandler locationMessageHandler;
 
+    @Resource
+    private TextMessageHandler textMessageHandler;
+
+    @Resource
+    private VoiceMessageHandler voiceMessageHandler;
+
+    @Resource
+    private VideoMessageHandler videoMessageHandler;
+
+    @Resource
+    private LinkMessageHandler linkMessageHandler;
+
     public MessageHandler dispatch(WechatMessage message) throws WechatException {
 
         if(MessageType.event.name().equals(message.getMessageType()) && MenuType.CLICK.getCode().equalsIgnoreCase(message.getEvent())) {
@@ -49,6 +61,16 @@ public class MessageDispatcher {
             return locationMessageHandler;      // fetch picture url
         } else if(MessageType.location.name().equals(message.getMessageType())) {
             return locationMessageHandler;      // latitude and longitude are more accurate
+        } else if(MessageType.text.name().equals(message.getMessageType())) {
+            return textMessageHandler;
+        } else if(MessageType.voice.name().equals(message.getMessageType())) {
+            return voiceMessageHandler;
+        } else if(MessageType.video.name().equals(message.getMessageType())) {
+            return videoMessageHandler;
+        } else if(MessageType.shortvideo.name().equals(message.getMessageType())) {
+            return videoMessageHandler;
+        } else if(MessageType.link.name().equals(message.getMessageType())) {
+            return linkMessageHandler;
         } else {
             throw new WechatException(ErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.name(), ErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.getDescription());
         }
