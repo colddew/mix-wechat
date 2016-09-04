@@ -1,7 +1,9 @@
 package edu.ustc.dto;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class SendLocationInfo {
 
     @XmlElement(name = "Location_X")

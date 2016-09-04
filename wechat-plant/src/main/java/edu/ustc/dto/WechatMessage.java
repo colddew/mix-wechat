@@ -1,9 +1,6 @@
 package edu.ustc.dto;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -52,11 +49,23 @@ public class WechatMessage implements Serializable {
     @XmlElement(name = "MediaId")
     private String mediaId;
 
-    @XmlElement(name = "ScanCodeInfo")
+    @XmlElement(name = "Location_X")
+    private String locationX;
+
+    @XmlElement(name = "Location_Y")
+    private String locationY;
+
+    @XmlElement(name = "Scale")
+    private String scale;
+
+    @XmlElement(name = "Label")
+    private String label;
+
     private ScanCodeInfo scanCodeInfo;
 
-    @XmlElement(name = "SendLocationInfo")
     private SendLocationInfo sendLocationInfo;
+
+    private SendPicturesInfo sendPicturesInfo;
 
     public String getToUserName() {
         return toUserName;
@@ -170,11 +179,59 @@ public class WechatMessage implements Serializable {
         this.mediaId = mediaId;
     }
 
+    public String getLocationX() {
+        return locationX;
+    }
+
+    public void setLocationX(String locationX) {
+        this.locationX = locationX;
+    }
+
+    public String getLocationY() {
+        return locationY;
+    }
+
+    public void setLocationY(String locationY) {
+        this.locationY = locationY;
+    }
+
+    public String getScale() {
+        return scale;
+    }
+
+    public void setScale(String scale) {
+        this.scale = scale;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     public ScanCodeInfo getScanCodeInfo() {
         return scanCodeInfo;
     }
 
     public void setScanCodeInfo(ScanCodeInfo scanCodeInfo) {
         this.scanCodeInfo = scanCodeInfo;
+    }
+
+    public SendLocationInfo getSendLocationInfo() {
+        return sendLocationInfo;
+    }
+
+    public void setSendLocationInfo(SendLocationInfo sendLocationInfo) {
+        this.sendLocationInfo = sendLocationInfo;
+    }
+
+    public SendPicturesInfo getSendPicturesInfo() {
+        return sendPicturesInfo;
+    }
+
+    public void setSendPicturesInfo(SendPicturesInfo sendPicturesInfo) {
+        this.sendPicturesInfo = sendPicturesInfo;
     }
 }
