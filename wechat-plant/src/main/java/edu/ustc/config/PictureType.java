@@ -1,5 +1,5 @@
 package edu.ustc.config;
 
 public enum PictureType {
-    JPG, PNG;
+    bmp, png, jpeg, jpg, gif;
 }

@@ -1,5 +1,5 @@
 package edu.ustc.config;
 
 public enum  VoiceFormat {
-    amr, speex;
+    amr, speex, mp3, wma, wav;
 }

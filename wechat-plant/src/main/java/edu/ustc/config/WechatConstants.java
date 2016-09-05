@@ -21,4 +21,10 @@ public class WechatConstants {
 
     public static final int SHOW_COVER_NO = 0;
     public static final int SHOW_COVER_YES = 1;
+
+    public static final int SHOW_COVER_PICTURE_NO = 0;
+    public static final int SHOW_COVER_PICTURE_YES = 1;
+
+    public static final int MATERIAL_MAX_LIMIT_IMAGE_AND_NEWS = 5000;
+    public static final int MATERIAL_MAX_LIMIT_OTHERS = 1000;
 }
