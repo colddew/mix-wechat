@@ -84,15 +84,29 @@ public class WechatPlantController {
                 WechatMessage message = JaxbUtils.convertXmlToObject(wechatMessage, WechatMessage.class);
 
                 MessageHandler handler = messageDispatcher.dispatch(message);
-                handler.handle(message);
+                String replyMessage = (String) handler.handle(message);
 
                 logger.info("push wechat message success");
+                output(replyMessage, response);
             } else {
                 logger.info("push wechat message fail");
+                output(StringUtils.EMPTY, response);
             }
         } catch (Exception e) {
             logger.error("push wechat message error, {}", e.getMessage());
+            try {
+                output(StringUtils.EMPTY, response);
+            } catch (IOException e1) {
+                logger.error("push wechat message error, {}", e.getMessage());
+            }
         }
+    }
+
+    private void output(String replyMessage, HttpServletResponse response) throws IOException {
+        PrintWriter writer = response.getWriter();
+        writer.write(replyMessage);
+        writer.flush();
+        writer.close();
     }
 
     @RequestMapping(value = "/jsApiConfig", method = RequestMethod.GET)

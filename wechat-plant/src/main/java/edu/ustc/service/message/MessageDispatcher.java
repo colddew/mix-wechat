@@ -1,6 +1,6 @@
 package edu.ustc.service.message;
 
-import edu.ustc.config.ErrorCode;
+import edu.ustc.config.LocalErrorCode;
 import edu.ustc.config.EventType;
 import edu.ustc.config.MessageType;
 import edu.ustc.config.WechatException;
@@ -51,7 +51,7 @@ public class MessageDispatcher {
     @Resource
     private LocationMessageHandler locationMessageHandler;
 
-    public MessageHandler dispatch(WechatMessage message) throws WechatException {
+    public MessageHandler dispatch(WechatMessage message) throws Exception {
 
         if(MessageType.event.name().equals(message.getMessageType()) && EventType.CLICK.getCode().equalsIgnoreCase(message.getEvent())) {
             return clickMessageHandler;
@@ -92,7 +92,7 @@ public class MessageDispatcher {
         } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.LOCATION.getCode().equalsIgnoreCase(message.getEvent())) {
             return locationMessageHandler;
         } else {
-            throw new WechatException(ErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.name(), ErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.getDescription());
+            throw new WechatException(LocalErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.name(), LocalErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.getDescription());
         }
     }
 }

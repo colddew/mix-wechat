@@ -1,5 +1,5 @@
 package edu.ustc.config;
 
 public enum MessageType {
-    event, text, image, location, voice, video, shortvideo, link;
+    event, text, image, location, voice, video, shortvideo, link, music, mpnews, wxcard;
 }

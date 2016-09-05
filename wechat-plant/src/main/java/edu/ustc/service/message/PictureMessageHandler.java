@@ -1,6 +1,5 @@
 package edu.ustc.service.message;
 
-import edu.ustc.config.WechatException;
 import edu.ustc.dto.WechatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,7 @@ public class PictureMessageHandler implements MessageHandler {
     private static final Logger logger = LoggerFactory.getLogger(PictureMessageHandler.class);
 
     @Override
-    public Object handle(WechatMessage message) throws WechatException {
+    public Object handle(WechatMessage message) throws Exception {
         logger.info("handle picture message success");
         return null;
     }

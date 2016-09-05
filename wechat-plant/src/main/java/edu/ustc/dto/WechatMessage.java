@@ -3,6 +3,11 @@ package edu.ustc.dto;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
+/**
+ * de-duplication fields
+ * 1. MsgId
+ * 2. FromUserName and CreateTime
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "xml")
 public class WechatMessage implements Serializable {
@@ -81,6 +86,21 @@ public class WechatMessage implements Serializable {
 
     @XmlElement(name = "Ticket")
     private String ticket;
+
+    @XmlElement(name = "Status")
+    private String status;
+
+    @XmlElement(name = "TotalCount")
+    private Integer totalCount;
+
+    @XmlElement(name = "FilterCount")
+    private Integer filterCount;
+
+    @XmlElement(name = "SentCount")
+    private Integer sentCount;
+
+    @XmlElement(name = "ErrorCount")
+    private Integer errorCount;
 
     private ScanCodeInfo scanCodeInfo;
 
@@ -286,6 +306,46 @@ public class WechatMessage implements Serializable {
 
     public void setTicket(String ticket) {
         this.ticket = ticket;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public Integer getFilterCount() {
+        return filterCount;
+    }
+
+    public void setFilterCount(Integer filterCount) {
+        this.filterCount = filterCount;
+    }
+
+    public Integer getSentCount() {
+        return sentCount;
+    }
+
+    public void setSentCount(Integer sentCount) {
+        this.sentCount = sentCount;
+    }
+
+    public Integer getErrorCount() {
+        return errorCount;
+    }
+
+    public void setErrorCount(Integer errorCount) {
+        this.errorCount = errorCount;
     }
 
     public ScanCodeInfo getScanCodeInfo() {

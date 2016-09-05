@@ -15,7 +15,9 @@ public enum EventType {
     SUBSCRIBE("subscribe", "关注"),
     UNSUBSCRIBE("unsubscribe", "取消关注"),
     SCAN("scan", "扫描带参数二维码"),
-    LOCATION("location", "上报地理位置");
+    LOCATION("location", "上报地理位置"),
+    MASSSENDJOBFINISH("masssendjobfinish", "群发任务结束"),
+    TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH", "模版消息发送任务结束");
 
     private String code;
     private String description;
