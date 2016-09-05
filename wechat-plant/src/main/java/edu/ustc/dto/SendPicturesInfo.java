@@ -12,6 +12,7 @@ public class SendPicturesInfo {
     @XmlElement(name = "Count")
     private Integer count;
 
+    @XmlElement(name = "PicList")
     private PictureList pictureList;
 
     public Integer getCount() {

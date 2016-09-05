@@ -68,7 +68,7 @@ public class MessageDispatcher {
         } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.PIC_WEIXIN.getCode().equalsIgnoreCase(message.getEvent())) {
             return pictureMessageHandler;       // validate album md5 checksum
         } else if(MessageType.image.name().equals(message.getMessageType())) {
-            return pictureMessageHandler;       // for md5 checksum
+            return pictureMessageHandler;
         } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.LOCATION_SELECT.getCode().equalsIgnoreCase(message.getEvent())) {
             return locationSelectMessageHandler;      // fetch picture url
         } else if(MessageType.location.name().equals(message.getMessageType())) {

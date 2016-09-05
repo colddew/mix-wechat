@@ -16,8 +16,14 @@ public enum EventType {
     UNSUBSCRIBE("unsubscribe", "取消关注"),
     SCAN("scan", "扫描带参数二维码"),
     LOCATION("location", "上报地理位置"),
-    MASSSENDJOBFINISH("masssendjobfinish", "群发任务结束"),
-    TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH", "模版消息发送任务结束");
+    MASSS_END_JOB_FINISH("masssendjobfinish", "群发任务结束"),
+    TEMPLATES_END_JOB_FINISH("templatesendjobfinish", "模版消息发送任务结束"),
+    QUALIFICATION_VERIFY_SUCCESS("qualification_verify_success", "资质认证成功获得接口权限"),
+    QUALIFICATION_VERIFY_FAIL("qualification_verify_fail", "资质认证失败"),
+    NAMING_VERIFY_SUCCESS("naming_verify_success", "名称认证成功获得打勾认证标识"),
+    NAMING_VERIFY_FAIL("naming_verify_fail", "名称认证失败"),
+    ANNUAL_RENEW("annual_renew", "年审通知"),
+    VERIFY_EXPIRED("verify_expired", "认证过期失效通知");
 
     private String code;
     private String description;

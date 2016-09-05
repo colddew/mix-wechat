@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 public class TextMessageHandler implements MessageHandler {
 
@@ -16,19 +18,19 @@ public class TextMessageHandler implements MessageHandler {
     @Override
     public Object handle(WechatMessage message) throws Exception {
 
-        String replyMessage = assemble();
+        String replyMessage = assemble(message);
 
         logger.info("handle text message success");
 
         return replyMessage;
     }
     
-    public String assemble() throws Exception {
+    public String assemble(WechatMessage message) throws Exception {
 
         ReplyMessage replyMessage = new ReplyMessage();
-        replyMessage.setFromUserName("gh_a90e17a6ef8e");
-        replyMessage.setToUserName("o5dc-wADXQ2-KiFWxOJONAnZshgo");
-        replyMessage.setCreateTime("1472979572");
+        replyMessage.setFromUserName(message.getToUserName());
+        replyMessage.setToUserName(message.getFromUserName());
+        replyMessage.setCreateTime(String.valueOf(Instant.now().getEpochSecond()));
         replyMessage.setMessageType(MessageType.text.name());
         replyMessage.setContent("welcome to plant home...");
 

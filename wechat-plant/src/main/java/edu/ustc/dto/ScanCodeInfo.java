@@ -3,7 +3,7 @@ package edu.ustc.dto;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement
+@XmlRootElement(name = "ScanCodeInfo")
 public class ScanCodeInfo {
 
     @XmlElement(name = "ScanType")

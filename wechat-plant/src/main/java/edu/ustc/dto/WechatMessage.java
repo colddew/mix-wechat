@@ -102,10 +102,22 @@ public class WechatMessage implements Serializable {
     @XmlElement(name = "ErrorCount")
     private Integer errorCount;
 
+    @XmlElement(name = "ExpiredTime")
+    private String expiredTime;
+
+    @XmlElement(name = "FailTime")
+    private String failTime;
+
+    @XmlElement(name = "FailReason")
+    private String failReason;
+
+    @XmlElement(name = "ScanCodeInfo")
     private ScanCodeInfo scanCodeInfo;
 
+    @XmlElement(name = "SendLocationInfo")
     private SendLocationInfo sendLocationInfo;
 
+    @XmlElement(name = "SendPicsInfo")
     private SendPicturesInfo sendPicturesInfo;
 
     public String getToUserName() {
@@ -370,5 +382,29 @@ public class WechatMessage implements Serializable {
 
     public void setSendPicturesInfo(SendPicturesInfo sendPicturesInfo) {
         this.sendPicturesInfo = sendPicturesInfo;
+    }
+
+    public String getExpiredTime() {
+        return expiredTime;
+    }
+
+    public void setExpiredTime(String expiredTime) {
+        this.expiredTime = expiredTime;
+    }
+
+    public String getFailTime() {
+        return failTime;
+    }
+
+    public void setFailTime(String failTime) {
+        this.failTime = failTime;
+    }
+
+    public String getFailReason() {
+        return failReason;
+    }
+
+    public void setFailReason(String failReason) {
+        this.failReason = failReason;
     }
 }

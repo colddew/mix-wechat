@@ -24,17 +24,22 @@ public class ReplyMessage {
     @XmlElement(name = "Content")
     private String content;
 
+    @XmlElement(name = "Image")
     private Image image;
 
+    @XmlElement(name = "Voice")
     private Voice voice;
 
+    @XmlElement(name = "Video")
     private Video video;
 
+    @XmlElement(name = "Music")
     private Music music;
 
     @XmlElement(name = "ArticleCount")
     private String articleCount;
 
+    @XmlElement(name = "Articles")
     private Articles articles;
 
     public String getToUserName() {
