@@ -103,10 +103,12 @@ public class WechatPlantController {
     }
 
     private void output(String replyMessage, HttpServletResponse response) throws IOException {
-        PrintWriter writer = response.getWriter();
-        writer.write(replyMessage);
-        writer.flush();
-        writer.close();
+        if(StringUtils.isNotBlank(replyMessage)) {
+            PrintWriter writer = response.getWriter();
+            writer.write(replyMessage);
+            writer.flush();
+            writer.close();
+        }
     }
 
     @RequestMapping(value = "/jsApiConfig", method = RequestMethod.GET)
