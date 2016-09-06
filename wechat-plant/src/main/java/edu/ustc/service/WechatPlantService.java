@@ -198,8 +198,8 @@ public class WechatPlantService {
 
         WechatSubMenu location = new WechatSubMenu();
         location.setType(EventType.VIEW.getCode());
-        location.setName(MenuBrief.VIEW_PLANT_LOCATION.getDescription());
-        location.setUrl(MenuBrief.VIEW_PLANT_LOCATION.getUrl());
+        location.setName(MenuBrief.VIEW_PLANT_ABOUT.getDescription());
+        location.setUrl(MenuBrief.VIEW_PLANT_ABOUT.getUrl());
 
         List<WechatSubMenu> shareSubMenuList = new ArrayList<>();
         shareSubMenuList.add(garden);

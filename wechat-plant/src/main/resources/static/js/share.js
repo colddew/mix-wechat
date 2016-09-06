@@ -35,7 +35,7 @@ angular.module("plantApp", [])
                         longitude: 113.324520,
                         name: 'TIT 创意园',
                         address: '广州市海珠区新港中路 397 号',
-                        scale: 14,
+                        scale: 12,
                         infoUrl: 'http://weixin.qq.com'
                     });
                 };
