@@ -181,6 +181,60 @@ public class WechatPlantService {
 
     private String assembleMenu() {
 
+        WechatSubMenu garden = new WechatSubMenu();
+        garden.setType(EventType.VIEW.getCode());
+        garden.setName(MenuBrief.VIEW_PLANT_GARDEN.getDescription());
+        garden.setUrl(MenuBrief.VIEW_PLANT_GARDEN.getUrl());
+
+        WechatSubMenu balcony = new WechatSubMenu();
+        balcony.setType(EventType.VIEW.getCode());
+        balcony.setName(MenuBrief.VIEW_PLANT_BALCONY.getDescription());
+        balcony.setUrl(MenuBrief.VIEW_PLANT_BALCONY.getUrl());
+
+        WechatSubMenu link = new WechatSubMenu();
+        link.setType(EventType.VIEW.getCode());
+        link.setName(MenuBrief.VIEW_PLANT_LINK.getDescription());
+        link.setUrl(MenuBrief.VIEW_PLANT_LINK.getUrl());
+
+        WechatSubMenu location = new WechatSubMenu();
+        location.setType(EventType.VIEW.getCode());
+        location.setName(MenuBrief.VIEW_PLANT_LOCATION.getDescription());
+        location.setUrl(MenuBrief.VIEW_PLANT_LOCATION.getUrl());
+
+        List<WechatSubMenu> shareSubMenuList = new ArrayList<>();
+        shareSubMenuList.add(garden);
+        shareSubMenuList.add(balcony);
+
+        List<WechatSubMenu> moreSubMenuList = new ArrayList<>();
+        moreSubMenuList.add(link);
+        moreSubMenuList.add(location);
+
+        WechatSubMenu experience = new WechatSubMenu();
+        experience.setType(EventType.CLICK.getCode());
+        experience.setName(MenuBrief.CLICK_PLANT_EXPERIENCE.getDescription());
+        experience.setKey(MenuBrief.CLICK_PLANT_EXPERIENCE.getCode());
+
+        WechatSubMenu share = new WechatSubMenu();
+        share.setName(MenuBrief.CLICK_PLANT_SHARE.getDescription());
+        share.setSubButton(shareSubMenuList);
+
+        WechatSubMenu more = new WechatSubMenu();
+        more.setName(MenuBrief.CLICK_PLANT_MORE.getDescription());
+        more.setSubButton(moreSubMenuList);
+
+        List<WechatSubMenu> menuList = new ArrayList<>();
+        menuList.add(experience);
+        menuList.add(share);
+        menuList.add(more);
+
+        WechatMenu menu = new WechatMenu();
+        menu.setButton(menuList);
+
+        return JSON.toJSONString(menu);
+    }
+
+    private String assembleTestMenu() {
+
         WechatSubMenu subMenu1 = new WechatSubMenu();
         subMenu1.setType(EventType.CLICK.getCode());
         subMenu1.setName(MenuBrief.CLICK_DAILY_RECOMMEND.getDescription());

@@ -2,18 +2,26 @@ package edu.ustc.config;
 
 public enum MenuBrief {
 
-    CLICK_DAILY_RECOMMEND("C1001", "每日推荐", null),
-    CLICK_STAR("C1002", "赞一下", null),
-    VIEW_SEARCH("V1001", "搜索", "http://www.soso.com/"),
-    VIEW_VIDEO("V1002", "视频", "http://v.qq.com/"),
-    SCANCODE_PUSH_SCANCODE("SP1001", "扫码推事件", null),
-    SCANCODE_WAITMSG_SCANCODE("SW1001", "扫码带提示", null),
-    PIC_SYSPHOTO_PHOTO("PS1001", "系统拍照发图", null),
-    PIC_PHOTO_OR_ALBUM_PHOTO("PP1001", "拍照或相册发图", null),
-    PIC_WEIXIN_ALBUM("PW1001", "微信相册发图", null),
-    LOCATION_SELECT_LOCATION("LS1001", "发送位置", null),
-    MEDIA_ID_PICTURE("MI1001", "图片", null),
-    VIEW_LIMITED_MESSAGE("VL1001", "图文消息", null);
+    CLICK_DAILY_RECOMMEND("T_C1001", "每日推荐", null),
+    CLICK_STAR("T_C1002", "赞一下", null),
+    VIEW_SEARCH("T_V1001", "搜索", "http://www.soso.com/"),
+    VIEW_VIDEO("T_V1002", "视频", "http://v.qq.com/"),
+    SCANCODE_PUSH_SCANCODE("T_SP1001", "扫码推事件", null),
+    SCANCODE_WAITMSG_SCANCODE("T_SW1001", "扫码带提示", null),
+    PIC_SYSPHOTO_PHOTO("T_PS1001", "系统拍照发图", null),
+    PIC_PHOTO_OR_ALBUM_PHOTO("T_PP1001", "拍照或相册发图", null),
+    PIC_WEIXIN_ALBUM("T_PW1001", "微信相册发图", null),
+    LOCATION_SELECT_LOCATION("T_LS1001", "发送位置", null),
+    MEDIA_ID_PICTURE("T_MI1001", "图片", null),
+    VIEW_LIMITED_MESSAGE("T_VL1001", "图文消息", null),
+
+    CLICK_PLANT_EXPERIENCE("P_C1001", "绿植心经", null),
+    CLICK_PLANT_SHARE("P_C1002", "我有绿植", null),
+    CLICK_PLANT_MORE("P_C1003", "更多", null),
+    VIEW_PLANT_GARDEN("P_T1001", "绿植花园", "http://www.qq.com/"),
+    VIEW_PLANT_BALCONY("P_T1002", "绿色阳台", "http://www.qq.com/"),
+    VIEW_PLANT_LINK("P_T1003", "绿色连萌", "http://www.qq.com/"),
+    VIEW_PLANT_LOCATION("P_T1004", "关于我们", "https://b64d462d.ngrok.io/html/share.html");
 
     private String code;
     private String description;

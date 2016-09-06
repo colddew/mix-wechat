@@ -32,7 +32,7 @@ public class TextMessageHandler implements MessageHandler {
         replyMessage.setToUserName(message.getFromUserName());
         replyMessage.setCreateTime(String.valueOf(Instant.now().getEpochSecond()));
         replyMessage.setMessageType(MessageType.text.name());
-        replyMessage.setContent("welcome to plant home...");
+        replyMessage.setContent("welcome to plant home");
 
         return JaxbUtils.convertObjectToXml(replyMessage);
     }
