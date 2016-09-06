@@ -37,7 +37,7 @@ public class ReplyMessage {
     private Music music;
 
     @XmlElement(name = "ArticleCount")
-    private String articleCount;
+    private Integer articleCount;
 
     @XmlElement(name = "Articles")
     private Articles articles;
@@ -114,11 +114,11 @@ public class ReplyMessage {
         this.music = music;
     }
 
-    public String getArticleCount() {
+    public Integer getArticleCount() {
         return articleCount;
     }
 
-    public void setArticleCount(String articleCount) {
+    public void setArticleCount(Integer articleCount) {
         this.articleCount = articleCount;
     }
 

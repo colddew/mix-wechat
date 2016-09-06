@@ -66,6 +66,9 @@ public class WechatPlantController {
     }
 
     private void output(VerificationRequest request, HttpServletResponse response) throws IOException {
+
+        response.setCharacterEncoding("UTF-8");
+
         PrintWriter writer = response.getWriter();
         writer.write(request.getEchostr());
         writer.flush();
@@ -103,7 +106,11 @@ public class WechatPlantController {
     }
 
     private void output(String replyMessage, HttpServletResponse response) throws IOException {
+
         if(StringUtils.isNotBlank(replyMessage)) {
+
+            response.setCharacterEncoding("UTF-8");
+
             PrintWriter writer = response.getWriter();
             writer.write(replyMessage);
             writer.flush();
