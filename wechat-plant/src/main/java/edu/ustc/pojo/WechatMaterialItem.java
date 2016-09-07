@@ -1,7 +1,6 @@
 package edu.ustc.pojo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import edu.ustc.config.WechatNewsContent;
 
 public class WechatMaterialItem {
 

@@ -1,7 +1,6 @@
-package edu.ustc.config;
+package edu.ustc.pojo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import edu.ustc.pojo.WechatNewsItem;
 
 import java.util.List;
 

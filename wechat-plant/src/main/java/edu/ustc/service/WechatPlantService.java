@@ -410,6 +410,7 @@ public class WechatPlantService {
         wechatMaterialList.setRefreshTime(Instant.now().getEpochSecond());
     }
 
+    //TODO store the data to persistent cache may be the best choice, otherwise we will get "reach max api daily quota limit hint: [xxx]" exception soon
     private void cache(WechatMaterialList wechatMaterialList) {
         this.wechatMaterialList = wechatMaterialList;
     }
