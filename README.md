@@ -7,8 +7,8 @@ a) upload image
 
   curl -F media=@test.png 'https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=<access_token>'
 
-{"url":"http://mmbiz.qpic.cn\/mmbiz_png/<random_string>/0"}
-｀｀｀
+  {"url":"http://mmbiz.qpic.cn/mmbiz_png/<random_string>/0"}
+
 b) upload image thumb
 curl -F media=@test.png 'https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=<access_token>=thumb'
 
