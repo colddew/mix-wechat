@@ -77,9 +77,9 @@ public class AccessTokenService {
             cache(appID, appSecret, accessToken);
 
             return accessToken;
-        } else {
-            return wechatAccessToken;
         }
+
+        return wechatAccessToken;
     }
 
     private boolean needRefreshAccessToken() {

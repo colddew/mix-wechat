@@ -1,6 +1,6 @@
 package edu.ustc.config;
 
-public enum WechatGlobalCode {
+public enum WechatPublicPlatformCode {
 
     CODE_BUSY("-1", "系统繁忙，此时请开发者稍候再试"),
     CODE_OK("0", "请求成功"),
@@ -156,7 +156,7 @@ public enum WechatGlobalCode {
     private String code;
     private String description;
 
-    WechatGlobalCode(String code, String description) {
+    WechatPublicPlatformCode(String code, String description) {
         this.code = code;
         this.description = description;
     }

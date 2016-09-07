@@ -47,6 +47,9 @@ public class WechatProperties {
     @Value("${wechat.menu.delete.url}")
     private String deleteMenuUrl;
 
+    @Value("${wechat.material.batchget.url}")
+    private String batchGetMaterialUrl;
+
     public String getAppID() {
         return appID;
     }
@@ -149,5 +152,13 @@ public class WechatProperties {
 
     public void setDeleteMenuUrl(String deleteMenuUrl) {
         this.deleteMenuUrl = deleteMenuUrl;
+    }
+
+    public String getBatchGetMaterialUrl() {
+        return batchGetMaterialUrl;
+    }
+
+    public void setBatchGetMaterialUrl(String batchGetMaterialUrl) {
+        this.batchGetMaterialUrl = batchGetMaterialUrl;
     }
 }

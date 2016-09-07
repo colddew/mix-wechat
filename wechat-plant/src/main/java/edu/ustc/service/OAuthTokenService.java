@@ -1,7 +1,7 @@
 package edu.ustc.service;
 
 import com.alibaba.fastjson.JSON;
-import edu.ustc.config.WechatGlobalCode;
+import edu.ustc.config.WechatPublicPlatformCode;
 import edu.ustc.config.WechatException;
 import edu.ustc.config.WechatProperties;
 import edu.ustc.pojo.WechatOAuthToken;
@@ -70,7 +70,7 @@ public class OAuthTokenService {
 
         String result = OkHttpUtils.synGetString(checkOAuthTokenUrl);
         WechatOAuthToken token = JSON.parseObject(result, WechatOAuthToken.class);
-        if(!WechatGlobalCode.CODE_OK.getCode().equals(token.getErrorCode())) {
+        if(!WechatPublicPlatformCode.CODE_OK.getCode().equals(token.getErrorCode())) {
             throw new WechatException(token.getErrorCode(), token.getErrorMessage());
         }
 

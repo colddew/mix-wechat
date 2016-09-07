@@ -2,6 +2,8 @@ package edu.ustc.config;
 
 public class WechatConstants {
 
+    public static final long WECHAT_COMMON_REFRESH_PERIOD_SECONDS = 3600;
+
     public static final long WECHAT_ACCESS_TOKEN_EXPIRY_SECONDS = 7200;
     public static final long WECHAT_OAUTH_TOKEN_EXPIRY_SECONDS = 7200;
     public static final long WECHAT_OAUTH_REFRESH_TOKEN_EXPIRY_DAYS = 30;

@@ -13,15 +13,24 @@ import edu.ustc.utils.OkHttpUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.nio.charset.Charset;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static edu.ustc.utils.OkHttpUtils.synGetString;
+
 @Service
 public class WechatPlantService {
+
+    private static final Logger logger = LoggerFactory.getLogger(WechatPlantService.class);
 
     @Autowired
     private WechatProperties wechatProperties;
@@ -33,6 +42,20 @@ public class WechatPlantService {
     private AccessTokenService accessTokenService;
 
     private Map<String, JsApiConfig> jsApiConfigMap = new ConcurrentHashMap<>();
+
+    private WechatMaterialList wechatMaterialList;
+
+    @Scheduled(fixedDelay = 1000 * 60 * 60)
+    public void autoRefreshWechatMaterialList() {
+        if(needRefreshWechatMaterialList()) {
+            try {
+                getWechatNewsItemList();
+                logger.info("auto refresh wechat material list success");
+            } catch (Exception e) {
+                logger.error("auto refresh wechat material list error, {}", e.getMessage());
+            }
+        }
+    }
 
     public String getSignature(VerificationRequest request) throws Exception {
         return encryptWithSHA1(concatVerificationInfo(request));
@@ -61,7 +84,7 @@ public class WechatPlantService {
         String oAuthUserInfoUrl = StringUtils.replaceEach(wechatProperties.getOAuthUserInfoUrl(), new String[]{"#OAUTH_TOKEN#", "#OPENID#"},
                 new String[]{oAuthToken, openID});
 
-        String result = OkHttpUtils.synGetString(oAuthUserInfoUrl);
+        String result = synGetString(oAuthUserInfoUrl);
         WechatUserInfo userInfo = JSON.parseObject(result, WechatUserInfo.class);
         if(StringUtils.isNotBlank(userInfo.getErrorCode())) {
             throw new WechatException(userInfo.getErrorCode(), userInfo.getErrorMessage());
@@ -87,9 +110,9 @@ public class WechatPlantService {
             String jsApiTicketUrl = StringUtils.replaceEach(wechatProperties.getJsApiTicketUrl(), new String[]{"#ACCESS_TOKEN#"},
                     new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
 
-            String result = OkHttpUtils.synGetString(jsApiTicketUrl);
+            String result = synGetString(jsApiTicketUrl);
             JsApiConfig jsApiConfig = JSON.parseObject(result, JsApiConfig.class);
-            if(!WechatGlobalCode.CODE_OK.getCode().equals(jsApiConfig.getErrorCode())) {
+            if(!WechatPublicPlatformCode.CODE_OK.getCode().equals(jsApiConfig.getErrorCode())) {
                 throw new WechatException(jsApiConfig.getErrorCode(), jsApiConfig.getErrorMessage());
             }
 
@@ -172,7 +195,7 @@ public class WechatPlantService {
 
         String result = OkHttpUtils.synPostJson(createMenuUrl, assembleMenu());
         JSONObject object = JSON.parseObject(result);
-        if(!WechatGlobalCode.CODE_OK.getCode().equals(object.getString("errcode"))) {
+        if(!WechatPublicPlatformCode.CODE_OK.getCode().equals(object.getString("errcode"))) {
             throw new WechatException(object.getString("errcode"), object.getString("errmsg"));
         }
 
@@ -341,8 +364,101 @@ public class WechatPlantService {
         String getMenuUrl = StringUtils.replaceEach(wechatProperties.getGetMenuUrl(), new String[]{"#ACCESS_TOKEN#"},
                 new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
 
-        String result = OkHttpUtils.synGetString(getMenuUrl);
+        String result = synGetString(getMenuUrl);
 
         return JSON.parseObject(result);
+    }
+
+    public WechatMaterialList getWechatMaterialList(String json) throws Exception {
+
+        if(needRefreshWechatMaterialList()) {
+
+            String batchGetMaterialUrl = StringUtils.replaceEach(wechatProperties.getBatchGetMaterialUrl(), new String[]{"#ACCESS_TOKEN#"},
+                    new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
+
+            String result = OkHttpUtils.synPostJson(batchGetMaterialUrl, json);
+            WechatMaterialList wechatMaterialList = JSON.parseObject(result, WechatMaterialList.class);
+            if(StringUtils.isNotBlank(wechatMaterialList.getErrorCode())) {
+                throw new WechatException(wechatMaterialList.getErrorCode(), wechatMaterialList.getErrorMessage());
+            }
+
+            supplement(wechatMaterialList);
+            cache(wechatMaterialList);
+
+            return wechatMaterialList;
+        }
+
+        return wechatMaterialList;
+    }
+
+    private boolean needRefreshWechatMaterialList() {
+
+        if(null !=  wechatMaterialList) {
+
+            long now = Instant.now().getEpochSecond();
+            long refreshTime = wechatMaterialList.getRefreshTime();
+
+            if(now - refreshTime < WechatConstants.WECHAT_COMMON_REFRESH_PERIOD_SECONDS) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void supplement(WechatMaterialList wechatMaterialList) {
+        wechatMaterialList.setRefreshTime(Instant.now().getEpochSecond());
+    }
+
+    private void cache(WechatMaterialList wechatMaterialList) {
+        this.wechatMaterialList = wechatMaterialList;
+    }
+
+    public List<WechatNewsItem> getWechatNewsItemList() throws Exception {
+
+        List<WechatNewsItem> list = new ArrayList<>();
+
+        WechatMaterialList wechatMaterialList = getWechatMaterialList(assembleWechatNewsItemListRequest());
+        if(null !=  wechatMaterialList) {
+
+            List<WechatMaterialItem> wechatMaterialItemList = wechatMaterialList.getItem();
+            if(!CollectionUtils.isEmpty(wechatMaterialItemList)) {
+
+                for(WechatMaterialItem wechatMaterialItem : wechatMaterialItemList) {
+
+                    WechatNewsContent wechatNewsContent = wechatMaterialItem.getContent();
+                    if(null != wechatNewsContent) {
+
+                        List<WechatNewsItem> wechatNewsItemList = wechatNewsContent.getNewsItems();
+                        if(!CollectionUtils.isEmpty(wechatNewsItemList)) {
+
+                            for(WechatNewsItem wechatNewsItem : wechatNewsItemList) {
+                                if(checkWechatNewsItem(wechatNewsItem)) {
+                                    list.add(wechatNewsItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return list;
+    }
+
+    private String assembleWechatNewsItemListRequest() {
+        return "{\"type\":\"news\", \"offset\":0, \"count\":5}";
+    }
+
+    private boolean checkWechatNewsItem(WechatNewsItem wechatNewsItem) {
+
+        if(StringUtils.isNotBlank(wechatNewsItem.getTitle())
+                && StringUtils.isNotBlank(wechatNewsItem.getDigest())
+                && StringUtils.isNotBlank(wechatNewsItem.getThumbUrl())
+                && StringUtils.isNotBlank(wechatNewsItem.getUrl())) {
+            return true;
+        }
+
+        return false;
     }
 }
