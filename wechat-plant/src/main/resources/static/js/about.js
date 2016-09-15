@@ -36,7 +36,7 @@ angular.module("plantApp", [])
                         name: '杭州绿色连萌网络技术有限公司',
                         address: '杭州西湖区万塘路18号黄龙时代广场',
                         scale: 12,
-                        infoUrl: 'https://www.alipay.com'
+                        infoUrl: 'http://www.qq.com/'
                     });
                 };
             });
