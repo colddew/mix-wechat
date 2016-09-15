@@ -18,10 +18,10 @@ public enum MenuBrief {
     CLICK_PLANT_EXPERIENCE("P_C1001", "绿植心经", null),
     CLICK_PLANT_SHARE("P_C1002", "我有绿植", null),
     CLICK_PLANT_MORE("P_C1003", "更多", null),
-    VIEW_PLANT_GARDEN("P_T1001", "绿植花园", "https://4430aa9c.ngrok.io/html/garden.html"),
-    VIEW_PLANT_BALCONY("P_T1002", "绿色阳台", "https://4430aa9c.ngrok.io/html/balcony.html"),
-    VIEW_PLANT_LINK("P_T1003", "绿色连萌", "https://4430aa9c.ngrok.io/html/link.html"),
-    VIEW_PLANT_ABOUT("P_T1004", "关于我们", "https://4430aa9c.ngrok.io/html/about.html");
+    VIEW_PLANT_GARDEN("P_T1001", "绿植花园", "http://plantlink.info/html/garden.html"),
+    VIEW_PLANT_BALCONY("P_T1002", "绿色阳台", "http://plantlink.info/html/balcony.html"),
+    VIEW_PLANT_LINK("P_T1003", "绿色连萌", "http://plantlink.info/html/link.html"),
+    VIEW_PLANT_ABOUT("P_T1004", "关于我们", "http://plantlink.info/html/about.html");
 
     private String code;
     private String description;
