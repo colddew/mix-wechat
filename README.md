@@ -62,3 +62,6 @@ curl -XPOST 'https://api.weixin.qq.com/cgi-bin/material/get_material?access_toke
     "update_time": 1473149647
 }
 ```
+
+# startup
+nohup java -jar wechat-plant.jar &
