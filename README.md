@@ -63,5 +63,11 @@ curl -XPOST 'https://api.weixin.qq.com/cgi-bin/material/get_material?access_toke
 }
 ```
 
+# refresh menu
+
+```zsh
+curl -XPOST 'https://<host>/plant/menu'
+```
+
 # startup
 nohup java -jar wechat-plant.jar &
