@@ -2,6 +2,8 @@ package edu.ustc.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import edu.ustc.dto.VerificationRequest;
 import edu.ustc.dto.WechatMessage;
 import edu.ustc.pojo.JsApiConfig;
@@ -16,13 +18,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 @Controller
@@ -76,10 +79,10 @@ public class WechatPlantController {
     }
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
-    public void pushMessage(@RequestBody String wechatMessage, HttpServletResponse response) {
+    public void pushMessage(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-
+            String wechatMessage = CharStreams.toString(new InputStreamReader(request.getInputStream(), Charsets.UTF_8));
             logger.info("push wechat message, {}", wechatMessage);
 
             if(StringUtils.isNotBlank(wechatMessage)) {
@@ -99,8 +102,8 @@ public class WechatPlantController {
             logger.error("push wechat message error, {}", e.getMessage());
             try {
                 output(StringUtils.EMPTY, response);
-            } catch (IOException e1) {
-                logger.error("push wechat message error, {}", e.getMessage());
+            } catch (IOException ioe) {
+                logger.error("push wechat message error, {}", ioe.getMessage());
             }
         }
     }
