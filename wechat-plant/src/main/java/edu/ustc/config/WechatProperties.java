@@ -50,6 +50,12 @@ public class WechatProperties {
     @Value("${wechat.material.batchget.url}")
     private String batchGetMaterialUrl;
 
+    @Value("${wechat.material.batchget.offset}")
+    private int batchGetMaterialOffset;
+
+    @Value("${wechat.material.batchget.count}")
+    private int batchGetMaterialCount;
+
     public String getAppID() {
         return appID;
     }
@@ -160,5 +166,21 @@ public class WechatProperties {
 
     public void setBatchGetMaterialUrl(String batchGetMaterialUrl) {
         this.batchGetMaterialUrl = batchGetMaterialUrl;
+    }
+
+    public int getBatchGetMaterialOffset() {
+        return batchGetMaterialOffset;
+    }
+
+    public void setBatchGetMaterialOffset(int batchGetMaterialOffset) {
+        this.batchGetMaterialOffset = batchGetMaterialOffset;
+    }
+
+    public int getBatchGetMaterialCount() {
+        return batchGetMaterialCount;
+    }
+
+    public void setBatchGetMaterialCount(int batchGetMaterialCount) {
+        this.batchGetMaterialCount = batchGetMaterialCount;
     }
 }

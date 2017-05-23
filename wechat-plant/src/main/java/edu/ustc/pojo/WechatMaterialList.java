@@ -6,7 +6,7 @@ import java.util.List;
 
 public class WechatMaterialList {
 
-    @JSONField(name = "item_count")
+    @JSONField(name = "total_count")
     private Integer totalCount;
 
     @JSONField(name = "item_count")

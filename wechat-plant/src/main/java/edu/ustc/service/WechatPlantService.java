@@ -448,7 +448,9 @@ public class WechatPlantService {
     }
 
     private String assembleWechatNewsItemListRequest() {
-        return "{\"type\":\"news\", \"offset\":0, \"count\":5}";
+        return "{\"type\":\"" + MessageType.news.name() + "\", " +
+                "\"offset\":" + wechatProperties.getBatchGetMaterialOffset() + ", " +
+                "\"count\":" + wechatProperties.getBatchGetMaterialCount() + "}";
     }
 
     private boolean checkWechatNewsItem(WechatNewsItem wechatNewsItem) {
