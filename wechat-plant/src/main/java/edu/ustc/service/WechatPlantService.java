@@ -25,8 +25,6 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static edu.ustc.utils.OkHttpUtils.synGetString;
-
 @Service
 public class WechatPlantService {
 
@@ -45,7 +43,7 @@ public class WechatPlantService {
 
     private WechatMaterialList wechatMaterialList;
 
-    @Scheduled(fixedDelay = 1000 * 60 * 60)
+    @Scheduled(fixedRate = 1000 * 60 * 60)
     public void autoRefreshWechatMaterialList() {
         if(needRefreshWechatMaterialList()) {
             try {
@@ -84,7 +82,7 @@ public class WechatPlantService {
         String oAuthUserInfoUrl = StringUtils.replaceEach(wechatProperties.getOAuthUserInfoUrl(), new String[]{"#OAUTH_TOKEN#", "#OPENID#"},
                 new String[]{oAuthToken, openID});
 
-        String result = synGetString(oAuthUserInfoUrl);
+        String result = OkHttpUtils.synGetString(oAuthUserInfoUrl);
         WechatUserInfo userInfo = JSON.parseObject(result, WechatUserInfo.class);
         if(StringUtils.isNotBlank(userInfo.getErrorCode())) {
             throw new WechatException(userInfo.getErrorCode(), userInfo.getErrorMessage());
@@ -110,7 +108,7 @@ public class WechatPlantService {
             String jsApiTicketUrl = StringUtils.replaceEach(wechatProperties.getJsApiTicketUrl(), new String[]{"#ACCESS_TOKEN#"},
                     new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
 
-            String result = synGetString(jsApiTicketUrl);
+            String result = OkHttpUtils.synGetString(jsApiTicketUrl);
             JsApiConfig jsApiConfig = JSON.parseObject(result, JsApiConfig.class);
             if(!WechatPublicPlatformCode.CODE_OK.getCode().equals(jsApiConfig.getErrorCode())) {
                 throw new WechatException(jsApiConfig.getErrorCode(), jsApiConfig.getErrorMessage());
@@ -364,7 +362,7 @@ public class WechatPlantService {
         String getMenuUrl = StringUtils.replaceEach(wechatProperties.getGetMenuUrl(), new String[]{"#ACCESS_TOKEN#"},
                 new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
 
-        String result = synGetString(getMenuUrl);
+        String result = OkHttpUtils.synGetString(getMenuUrl);
 
         return JSON.parseObject(result);
     }
@@ -451,6 +449,23 @@ public class WechatPlantService {
         return "{\"type\":\"" + MessageType.news.name() + "\", " +
                 "\"offset\":" + wechatProperties.getBatchGetMaterialOffset() + ", " +
                 "\"count\":" + wechatProperties.getBatchGetMaterialCount() + "}";
+    }
+
+    private int getBatchGetMaterialOffset() {
+        try {
+            String countMaterialUrl = StringUtils.replaceEach(wechatProperties.getCountMaterialUrl(), new String[]{"#ACCESS_TOKEN#"},
+                    new String[]{accessTokenService.getWechatAccessToken().getAccessToken()});
+
+            String result = OkHttpUtils.synGetString(countMaterialUrl);
+            WechatMaterialCount wechatMaterialCount = JSON.parseObject(result, WechatMaterialCount.class);
+            if(StringUtils.isNotBlank(wechatMaterialList.getErrorCode())) {
+                return wechatProperties.getBatchGetMaterialOffset();
+            } else {
+                return wechatMaterialCount.getNewsCount() > 0 ? wechatMaterialCount.getNewsCount() - 1 : wechatProperties.getBatchGetMaterialOffset();
+            }
+        } catch (Exception e) {
+            return wechatProperties.getBatchGetMaterialOffset();
+        }
     }
 
     private boolean checkWechatNewsItem(WechatNewsItem wechatNewsItem) {

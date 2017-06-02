@@ -41,7 +41,7 @@ public class AccessTokenService {
         this.wechatAccessToken = new WechatAccessToken();
     }
 
-    @Scheduled(fixedDelay = 1000 * 60 * 60)
+    @Scheduled(fixedRate = 1000 * 60 * 60)
     public void autoRefreshAccessToken() {
         if(needAutoRefreshAccessToken()) {
             try {

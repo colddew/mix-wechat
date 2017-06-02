@@ -1,0 +1,39 @@
+.about {
+    margin-top: 35px;
+}
+
+.about .about-item {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.icon-left {
+    color: darkgray;
+    margin-right: 10px;
+}
+
+.icon-right {
+    color: darkgray;
+    float: right;
+}
+
+.about-item a {
+    color: #000000;
+    text-decoration:none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.about-item a:link {
+    color: #000000;
+    text-decoration: none;
+}
+
+.about-item a:visited {
+    color: #000000;
+    text-decoration: none;
+}
+
+.about-item a:hover {
+    color: #000000;
+    text-decoration: none;
+}

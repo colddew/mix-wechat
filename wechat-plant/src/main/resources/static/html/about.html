@@ -4,26 +4,60 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="../css/about.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
 
     <title>关于我们</title>
 </head>
 <body>
 
 <div class="container">
-    <div ng-controller="plantController">
-        <br>
-        <p>杭州绿色连萌网络技术有限公司</p>
-        <p>地址：<a href="" ng-click="openLocation()">杭州西湖区万塘路18号黄龙时代广场</a></p>
-        <p>电话：0571-88888888</p>
-        <p>传真：0571-88888888</p>
+    <div ng-controller="plantController" class="about">
+        <div class="about-item">
+            <i class="fa fa-institution fa-fw icon-left" aria-hidden=true></i>
+            杭州绿色连萌网络技术有限公司
+        </div>
+        <div class="about-item" ng-click="openLocation()">
+            <i class="fa fa-map-marker fa-fw icon-left" aria-hidden=true></i>
+            杭州西湖区万塘路18号黄龙时代广场
+            <i class="fa fa-chevron-right icon-right"></i>
+        </div>
+        <div class="about-item">
+            <i class="fa fa-phone fa-fw icon-left" aria-hidden=true></i>
+            <a href="tel:0571-88888888">0571-88888888</a>
+            <i class="fa fa-chevron-right icon-right"></i>
+        </div>
+        <div class="about-item">
+            <i class="fa fa-fax fa-fw icon-left" aria-hidden=true></i>
+            0571-88888888
+        </div>
+        <div class="about-item">
+            <i class="fa fa-envelope fa-fw icon-left" aria-hidden=true></i>
+            <a href="mailto:88028842@qq.com">88028842@qq.com</a>
+            <i class="fa fa-chevron-right icon-right"></i>
+        </div>
+        <div class="about-item">
+            <i class="fa fa-weibo fa-fw icon-left" aria-hidden=true></i>
+            绿色连萌
+        </div>
+        <div class="about-item">
+            <i class="fa fa-weixin fa-fw icon-left" aria-hidden=true></i>
+            plantlink (绿色连萌)
+        </div>
+    </div>
+    <div class="weui-footer weui-footer_fixed-bottom">
+        <!--<p class="weui-footer__links">-->
+            <!--<a href="#" class="weui-footer__link">意见反馈</a>-->
+        <!--</p>-->
+        <p class="weui-footer__text">Copyright &copy; 2016-2017 plantlink.cn</p>
     </div>
 </div>
 
 <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
 <!--<script src="../js/angular.min.js"></script>-->
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <!--<script src="../js/jweixin-1.0.0.js"></script>-->
 <script src="../js/about.js"></script>
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
