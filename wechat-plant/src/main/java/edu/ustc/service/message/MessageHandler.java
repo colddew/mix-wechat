@@ -18,7 +18,18 @@ public interface MessageHandler<T> {
         replyMessage.setToUserName(message.getFromUserName());
         replyMessage.setCreateTime(String.valueOf(Instant.now().getEpochSecond()));
         replyMessage.setMessageType(MessageType.text.name());
-        replyMessage.setContent("暂不支持, 敬请期待~~");
+        replyMessage.setContent("暂不支持该类型的消息~~");
+
+        return JaxbUtils.convertObjectToXml(replyMessage);
+    }
+
+    default String assembleForCustomerService(WechatMessage message) throws Exception {
+
+        ReplyMessage replyMessage = new ReplyMessage();
+        replyMessage.setFromUserName(message.getToUserName());
+        replyMessage.setToUserName(message.getFromUserName());
+        replyMessage.setCreateTime(String.valueOf(Instant.now().getEpochSecond()));
+        replyMessage.setMessageType(MessageType.transfer_customer_service.name());
 
         return JaxbUtils.convertObjectToXml(replyMessage);
     }

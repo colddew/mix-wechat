@@ -18,7 +18,7 @@ public class TextMessageHandler implements MessageHandler {
     @Override
     public Object handle(WechatMessage message) throws Exception {
 
-        String replyMessage = assemble(message);
+        String replyMessage = assembleForCustomerService(message);
 
         logger.info("handle text message success");
 

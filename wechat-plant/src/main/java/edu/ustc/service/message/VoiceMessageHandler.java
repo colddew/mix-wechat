@@ -12,7 +12,11 @@ public class VoiceMessageHandler implements MessageHandler {
 
     @Override
     public Object handle(WechatMessage message) throws Exception {
+
+        String replyMessage = assembleForCustomerService(message);
+
         logger.info("handle voice message success");
-        return null;
+
+        return replyMessage;
     }
 }

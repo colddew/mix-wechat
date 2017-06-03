@@ -42,6 +42,9 @@ public class ReplyMessage {
     @XmlElement(name = "Articles")
     private Articles articles;
 
+    @XmlElement(name = "TransInfo")
+    private CustomerServiceTransferInfo transferInfo;
+
     public String getToUserName() {
         return toUserName;
     }
@@ -128,5 +131,13 @@ public class ReplyMessage {
 
     public void setArticles(Articles articles) {
         this.articles = articles;
+    }
+
+    public CustomerServiceTransferInfo getTransferInfo() {
+        return transferInfo;
+    }
+
+    public void setTransferInfo(CustomerServiceTransferInfo transferInfo) {
+        this.transferInfo = transferInfo;
     }
 }

@@ -28,6 +28,12 @@ public class MessageDispatcher {
     private LocationSelectMessageHandler locationSelectMessageHandler;
 
     @Resource
+    private LocationMessageHandler locationMessageHandler;
+
+    @Resource
+    private LocationReportMessageHandler locationReportMessageHandler;
+
+    @Resource
     private TextMessageHandler textMessageHandler;
 
     @Resource
@@ -35,6 +41,9 @@ public class MessageDispatcher {
 
     @Resource
     private VideoMessageHandler videoMessageHandler;
+
+    @Resource
+    private ShortVideoMessageHandler shortVideoMessageHandler;
 
     @Resource
     private LinkMessageHandler linkMessageHandler;
@@ -47,9 +56,6 @@ public class MessageDispatcher {
 
     @Resource
     private ScanMessageHandler scanMessageHandler;
-
-    @Resource
-    private LocationMessageHandler locationMessageHandler;
 
     public MessageHandler dispatch(WechatMessage message) throws Exception {
 
@@ -71,8 +77,10 @@ public class MessageDispatcher {
             return pictureMessageHandler;
         } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.LOCATION_SELECT.getCode().equalsIgnoreCase(message.getEvent())) {
             return locationSelectMessageHandler;      // fetch picture url
+        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.LOCATION.getCode().equalsIgnoreCase(message.getEvent())) {
+            return locationReportMessageHandler;
         } else if(MessageType.location.name().equals(message.getMessageType())) {
-            return locationSelectMessageHandler;      // latitude and longitude are more accurate
+            return locationMessageHandler;      // latitude and longitude are more accurate
         } else if(MessageType.text.name().equals(message.getMessageType())) {
             return textMessageHandler;
         } else if(MessageType.voice.name().equals(message.getMessageType())) {
@@ -80,7 +88,7 @@ public class MessageDispatcher {
         } else if(MessageType.video.name().equals(message.getMessageType())) {
             return videoMessageHandler;
         } else if(MessageType.shortvideo.name().equals(message.getMessageType())) {
-            return videoMessageHandler;
+            return shortVideoMessageHandler;
         } else if(MessageType.link.name().equals(message.getMessageType())) {
             return linkMessageHandler;
         } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.SUBSCRIBE.getCode().equalsIgnoreCase(message.getEvent())) {
@@ -89,8 +97,6 @@ public class MessageDispatcher {
             return unSubscribeMessageHandler;
         } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.SCAN.getCode().equalsIgnoreCase(message.getEvent())) {
             return scanMessageHandler;
-        } else if(MessageType.event.name().equals(message.getMessageType()) && EventType.LOCATION.getCode().equalsIgnoreCase(message.getEvent())) {
-            return locationMessageHandler;
         } else {
             throw new WechatException(LocalErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.name(), LocalErrorCode.UNSUPPORTED_MESSAGE_TYPE_OR_EVENT.getDescription());
         }
