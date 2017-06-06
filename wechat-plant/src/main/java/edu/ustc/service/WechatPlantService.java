@@ -55,7 +55,15 @@ public class WechatPlantService {
         }
     }
 
-    public String getSignature(VerificationRequest request) throws Exception {
+    public boolean checkSignature(VerificationRequest request) throws Exception {
+        if(getSignature(request).equalsIgnoreCase(request.getSignature())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private String getSignature(VerificationRequest request) throws Exception {
         return encryptWithSHA1(concatVerificationInfo(request));
     }
 

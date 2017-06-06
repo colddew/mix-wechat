@@ -49,8 +49,7 @@ public class WechatPlantController {
         try {
             checkVerificationRequest(request);
 
-            String signature = wechatPlantService.getSignature(request);
-            if(signature.equalsIgnoreCase(request.getSignature())) {
+            if(wechatPlantService.checkSignature(request)) {
                 logger.info("verify request success, {}", JSON.toJSONString(request));
                 output(request, response);
             } else {

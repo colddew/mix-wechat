@@ -50,6 +50,7 @@ public enum WechatPublicPlatformCode {
     CODE_40132("40132", "微信号不合法"),
     CODE_40137("40137", "不支持的图片格式"),
     CODE_40155("40155", "请勿添加其他公众号的主页链接"),
+    CODE_40164("40164", "调用接口的IP地址不在白名单中，请在接口IP白名单中进行设置"),
     CODE_41001("41001", "缺少access_token参数"),
     CODE_41002("41002", "缺少appid参数"),
     CODE_41003("41003", "缺少refresh_token参数"),
