@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 /**
- * de-duplication fields
+ * for de-duplication fields
  * 1. MsgId
  * 2. FromUserName and CreateTime
  */
